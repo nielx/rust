@@ -84,9 +84,9 @@ impl Socket {
         // resolve so we at least compile this.
         //
         // [1]: http://comments.gmane.org/gmane.linux.lib.musl.general/2963
-        #[cfg(target_os = "android")]
+        #[cfg(any(target_os = "android", target_os = "haiku"))]
         use libc::F_DUPFD as F_DUPFD_CLOEXEC;
-        #[cfg(not(target_os = "android"))]
+        #[cfg(not(any(target_os = "android", target_os = "haiku")))]
         use libc::F_DUPFD_CLOEXEC;
 
         let make_socket = |fd| {

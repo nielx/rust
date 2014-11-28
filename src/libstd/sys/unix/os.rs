@@ -44,6 +44,7 @@ pub fn errno() -> i32 {
         #[cfg_attr(target_os = "dragonfly", link_name = "__dfly_error")]
         #[cfg_attr(any(target_os = "macos", target_os = "ios", target_os = "freebsd"),
                    link_name = "__error")]
+        #[cfg_attr(target_os = "haiku", link_name = "_errnop")]
         fn errno_location() -> *const c_int;
     }
 
@@ -243,6 +244,12 @@ pub fn current_exe() -> io::Result<PathBuf> {
     }
 }
 
+#[cfg(target_os = "haiku")]
+pub fn current_exe() -> io::Result<PathBuf> {
+    use io::ErrorKind;
+    Err(io::Error::new(ErrorKind::Other, "Not implemented", None))
+}
+
 pub struct Args {
     iter: vec::IntoIter<OsString>,
     _dont_send_or_sync_me: *mut (),
@@ -345,7 +352,8 @@ pub fn args() -> Args {
           target_os = "bitrig",
           target_os = "netbsd",
           target_os = "openbsd",
-          target_os = "nacl"))]
+          target_os = "nacl",
+          target_os = "haiku"))]
 pub fn args() -> Args {
     use sys_common;
     let bytes = sys_common::args::clone().unwrap_or(Vec::new());
