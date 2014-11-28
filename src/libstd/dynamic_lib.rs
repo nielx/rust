@@ -81,6 +81,8 @@ impl DynamicLibrary {
             "PATH"
         } else if cfg!(target_os = "macos") {
             "DYLD_LIBRARY_PATH"
+		} else if cfg!(target_os = "haiku") {
+			"LIBRARY_PATH"
         } else {
             "LD_LIBRARY_PATH"
         }
@@ -179,7 +181,8 @@ mod tests {
           target_os = "freebsd",
           target_os = "dragonfly",
           target_os = "bitrig",
-          target_os = "openbsd"))]
+          target_os = "openbsd",
+          target_os = "haiku"))]
 mod dl {
     use prelude::v1::*;
 
