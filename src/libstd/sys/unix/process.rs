@@ -430,6 +430,13 @@ fn translate_status(status: c_int) -> ExitStatus {
         pub fn WEXITSTATUS(status: i32) -> i32 { status >> 8 }
         pub fn WTERMSIG(status: i32) -> i32 { status & 0o177 }
     }
+    
+    #[cfg(any(target_os = "haiku"))]
+    mod imp {
+        pub fn WIFEXITED(status: i32) -> bool { (status >> 8) == 0 }
+        pub fn WEXITSTATUS(status: i32) -> i32 { status & 0xff }
+        pub fn WTERMSIG(status: i32) -> i32 { (status >> 8) & 0xff }
+    }
 
     if imp::WIFEXITED(status) {
         ExitStatus::Code(imp::WEXITSTATUS(status))

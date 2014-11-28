@@ -100,7 +100,7 @@ pub type _Unwind_Exception_Cleanup_Fn =
                       exception: *mut _Unwind_Exception);
 
 #[cfg(any(all(target_os = "linux", not(target_env = "musl")),
-          target_os = "freebsd"))]
+          target_os = "freebsd", target_os = "haiku"))]
 #[link(name = "gcc_s")]
 extern {}
 

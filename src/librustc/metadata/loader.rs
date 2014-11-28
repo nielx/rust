@@ -239,6 +239,9 @@ use std::time::Duration;
 
 use flate;
 
+pub static HAIKU_DLL_PREFIX: &'static str = "lib";
+pub static HAIKU_DLL_SUFFIX: &'static str = ".so";
+
 pub struct CrateMismatch {
     path: PathBuf,
     got: String,
