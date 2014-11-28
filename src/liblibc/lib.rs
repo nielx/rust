@@ -125,6 +125,7 @@ pub use funcs::bsd43::*;
 //
 // So the following exports don't follow any particular plan.
 
+<<<<<<< HEAD
 #[cfg(unix)] pub use consts::os::sysconf::*;
 
 #[cfg(unix)] pub use funcs::posix88::mman::*;
@@ -141,10 +142,153 @@ pub use funcs::bsd43::*;
 // On NaCl, these libraries are static. Thus it would be a Bad Idea to link them
 // in when creating a test crate.
 #[cfg(not(any(windows, all(target_os = "nacl", test))))]
+=======
+#[cfg(unix)] pub use consts::os::sysconf::{_SC_PAGESIZE};
+#[cfg(unix)] pub use consts::os::posix88::{PROT_READ, PROT_WRITE, PROT_EXEC};
+#[cfg(unix)] pub use consts::os::posix88::{MAP_FILE, MAP_FIXED, MAP_ANON, MAP_PRIVATE, MAP_FAILED};
+#[cfg(unix)] pub use consts::os::posix88::{EACCES, EBADF, EINVAL, ENODEV, ENOMEM};
+#[cfg(unix)] pub use consts::os::posix88::{ECONNREFUSED, ECONNRESET, EPERM, EPIPE};
+#[cfg(unix)] pub use consts::os::posix88::{ENOTCONN, ECONNABORTED, EADDRNOTAVAIL, EINTR};
+#[cfg(unix)] pub use consts::os::posix88::{EADDRINUSE, ENOENT, EISDIR, EAGAIN, EWOULDBLOCK};
+#[cfg(unix)] pub use consts::os::posix88::{ECANCELED, SIGINT, EINPROGRESS};
+#[cfg(unix)] pub use consts::os::posix88::{ENOSYS, ENOTTY, ETIMEDOUT, EMFILE};
+#[cfg(unix)] pub use consts::os::posix88::{SIGTERM, SIGKILL, SIGPIPE, PROT_NONE};
+#[cfg(unix)] pub use consts::os::posix01::{SIG_IGN, F_GETFL, F_SETFL};
+#[cfg(unix)] pub use consts::os::bsd44::{AF_UNIX};
+#[cfg(unix)] pub use consts::os::extra::{O_NONBLOCK};
+
+#[cfg(unix)] pub use types::os::common::posix01::{pthread_t, timespec, timezone};
+
+#[cfg(unix)] pub use types::os::arch::posix88::{uid_t, gid_t};
+#[cfg(unix)] pub use types::os::arch::posix01::{pthread_attr_t};
+#[cfg(unix)] pub use types::os::arch::posix01::{stat, utimbuf};
+#[cfg(all(unix, not(target_os = "haiku")))] pub use types::os::common::bsd44::{ifaddrs};
+#[cfg(unix)] pub use funcs::posix88::unistd::{sysconf, setgid, setsid, setuid, pread, pwrite};
+#[cfg(unix)] pub use funcs::posix88::unistd::{getgid, getuid, getsid};
+#[cfg(unix)] pub use funcs::posix88::unistd::{_PC_NAME_MAX, utime, nanosleep, pathconf, link};
+#[cfg(unix)] pub use funcs::posix88::unistd::{chown};
+#[cfg(unix)] pub use funcs::posix88::mman::{mmap, munmap, mprotect};
+#[cfg(unix)] pub use funcs::posix88::dirent::{opendir, readdir_r, closedir};
+#[cfg(unix)] pub use funcs::posix88::fcntl::{fcntl};
+#[cfg(unix)] pub use funcs::posix88::net::{if_nametoindex};
+#[cfg(unix)] pub use funcs::posix01::stat_::{lstat};
+#[cfg(unix)] pub use funcs::posix01::unistd::{fsync, ftruncate};
+#[cfg(unix)] pub use funcs::posix01::unistd::{readlink, symlink};
+#[cfg(all(unix, not(target_os = "haiku")))] pub use funcs::bsd43::{getifaddrs, freeifaddrs};
+
+#[cfg(windows)] pub use consts::os::c95::{WSAECONNREFUSED, WSAECONNRESET, WSAEACCES};
+#[cfg(windows)] pub use consts::os::c95::{WSAEWOULDBLOCK, WSAENOTCONN, WSAECONNABORTED};
+#[cfg(windows)] pub use consts::os::c95::{WSAEADDRNOTAVAIL, WSAEADDRINUSE, WSAEINTR};
+#[cfg(windows)] pub use consts::os::c95::{WSAEINPROGRESS, WSAEINVAL, WSAEMFILE};
+#[cfg(windows)] pub use consts::os::extra::{ERROR_INSUFFICIENT_BUFFER};
+#[cfg(windows)] pub use consts::os::extra::{O_BINARY, O_NOINHERIT, PAGE_NOACCESS};
+#[cfg(windows)] pub use consts::os::extra::{PAGE_READONLY, PAGE_READWRITE, PAGE_EXECUTE};
+#[cfg(windows)] pub use consts::os::extra::{PAGE_EXECUTE_READ, PAGE_EXECUTE_READWRITE};
+#[cfg(windows)] pub use consts::os::extra::{MEM_COMMIT, MEM_RESERVE, MEM_RELEASE};
+#[cfg(windows)] pub use consts::os::extra::{FILE_MAP_READ, FILE_MAP_WRITE, FILE_MAP_EXECUTE};
+#[cfg(windows)] pub use consts::os::extra::{ERROR_ALREADY_EXISTS, ERROR_NO_DATA};
+#[cfg(windows)] pub use consts::os::extra::{ERROR_FILE_NOT_FOUND, ERROR_INVALID_NAME};
+#[cfg(windows)] pub use consts::os::extra::{ERROR_BROKEN_PIPE, ERROR_INVALID_FUNCTION};
+#[cfg(windows)] pub use consts::os::extra::{ERROR_CALL_NOT_IMPLEMENTED};
+#[cfg(windows)] pub use consts::os::extra::{ERROR_NOTHING_TO_TERMINATE};
+#[cfg(windows)] pub use consts::os::extra::{ERROR_INVALID_HANDLE};
+#[cfg(windows)] pub use consts::os::extra::{TRUE, FALSE, INFINITE};
+#[cfg(windows)] pub use consts::os::extra::{PROCESS_TERMINATE, PROCESS_QUERY_INFORMATION};
+#[cfg(windows)] pub use consts::os::extra::{STILL_ACTIVE, DETACHED_PROCESS};
+#[cfg(windows)] pub use consts::os::extra::{CREATE_NEW_PROCESS_GROUP, CREATE_UNICODE_ENVIRONMENT};
+#[cfg(windows)] pub use consts::os::extra::{FILE_BEGIN, FILE_END, FILE_CURRENT};
+#[cfg(windows)] pub use consts::os::extra::{FILE_GENERIC_READ, FILE_GENERIC_WRITE};
+#[cfg(windows)] pub use consts::os::extra::{FILE_SHARE_READ, FILE_SHARE_WRITE, FILE_SHARE_DELETE};
+#[cfg(windows)] pub use consts::os::extra::{TRUNCATE_EXISTING, CREATE_ALWAYS, OPEN_EXISTING};
+#[cfg(windows)] pub use consts::os::extra::{CREATE_NEW, FILE_APPEND_DATA, FILE_WRITE_DATA};
+#[cfg(windows)] pub use consts::os::extra::{OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL};
+#[cfg(windows)] pub use consts::os::extra::{FILE_FLAG_BACKUP_SEMANTICS, INVALID_HANDLE_VALUE};
+#[cfg(windows)] pub use consts::os::extra::{MOVEFILE_REPLACE_EXISTING};
+#[cfg(windows)] pub use consts::os::extra::{GENERIC_READ, GENERIC_WRITE};
+#[cfg(windows)] pub use consts::os::extra::{VOLUME_NAME_DOS};
+#[cfg(windows)] pub use consts::os::extra::{PIPE_ACCESS_DUPLEX, FILE_FLAG_FIRST_PIPE_INSTANCE};
+#[cfg(windows)] pub use consts::os::extra::{FILE_FLAG_OVERLAPPED, PIPE_TYPE_BYTE};
+#[cfg(windows)] pub use consts::os::extra::{PIPE_READMODE_BYTE, PIPE_WAIT};
+#[cfg(windows)] pub use consts::os::extra::{PIPE_UNLIMITED_INSTANCES, ERROR_ACCESS_DENIED};
+#[cfg(windows)] pub use consts::os::extra::{FILE_WRITE_ATTRIBUTES, FILE_READ_ATTRIBUTES};
+#[cfg(windows)] pub use consts::os::extra::{ERROR_PIPE_BUSY, ERROR_IO_PENDING};
+#[cfg(windows)] pub use consts::os::extra::{ERROR_PIPE_CONNECTED, WAIT_OBJECT_0};
+#[cfg(windows)] pub use consts::os::extra::{ERROR_NOT_FOUND};
+#[cfg(windows)] pub use consts::os::extra::{ERROR_OPERATION_ABORTED};
+#[cfg(windows)] pub use consts::os::extra::{FIONBIO};
+#[cfg(windows)] pub use types::os::common::bsd44::{SOCKET};
+#[cfg(windows)] pub use types::os::common::posix01::{stat, utimbuf};
+#[cfg(windows)] pub use types::os::arch::extra::{HANDLE, BOOL, LPSECURITY_ATTRIBUTES};
+#[cfg(windows)] pub use types::os::arch::extra::{LPCSTR, WORD, DWORD, BYTE, FILETIME};
+#[cfg(windows)] pub use types::os::arch::extra::{LARGE_INTEGER, LPVOID, LONG};
+#[cfg(windows)] pub use types::os::arch::extra::{time64_t, OVERLAPPED, LPCWSTR};
+#[cfg(windows)] pub use types::os::arch::extra::{LPOVERLAPPED, SIZE_T, LPDWORD};
+#[cfg(windows)] pub use types::os::arch::extra::{SECURITY_ATTRIBUTES, WIN32_FIND_DATAW};
+#[cfg(windows)] pub use funcs::c95::string::{wcslen};
+#[cfg(windows)] pub use funcs::posix88::stat_::{wstat, wutime, wchmod, wrmdir};
+#[cfg(windows)] pub use funcs::bsd43::{closesocket};
+#[cfg(windows)] pub use funcs::extra::kernel32::{GetCurrentDirectoryW, GetLastError};
+#[cfg(windows)] pub use funcs::extra::kernel32::{GetEnvironmentVariableW, SetEnvironmentVariableW};
+#[cfg(windows)] pub use funcs::extra::kernel32::{GetModuleFileNameW, SetCurrentDirectoryW};
+#[cfg(windows)] pub use funcs::extra::kernel32::{GetSystemInfo, VirtualAlloc, VirtualFree};
+#[cfg(windows)] pub use funcs::extra::kernel32::{CreateFileMappingW, MapViewOfFile};
+#[cfg(windows)] pub use funcs::extra::kernel32::{UnmapViewOfFile, CloseHandle};
+#[cfg(windows)] pub use funcs::extra::kernel32::{WaitForSingleObject, GetSystemTimeAsFileTime};
+#[cfg(windows)] pub use funcs::extra::kernel32::{QueryPerformanceCounter};
+#[cfg(windows)] pub use funcs::extra::kernel32::{QueryPerformanceFrequency};
+#[cfg(windows)] pub use funcs::extra::kernel32::{GetExitCodeProcess, TerminateProcess};
+#[cfg(windows)] pub use funcs::extra::kernel32::{ReadFile, WriteFile, SetFilePointerEx};
+#[cfg(windows)] pub use funcs::extra::kernel32::{SetEndOfFile, CreateFileW};
+#[cfg(windows)] pub use funcs::extra::kernel32::{CreateDirectoryW, FindFirstFileW};
+#[cfg(windows)] pub use funcs::extra::kernel32::{FindNextFileW, FindClose, DeleteFileW};
+#[cfg(windows)] pub use funcs::extra::kernel32::{CreateHardLinkW, CreateEventW};
+#[cfg(windows)] pub use funcs::extra::kernel32::{FlushFileBuffers, CreateNamedPipeW};
+#[cfg(windows)] pub use funcs::extra::kernel32::{SetNamedPipeHandleState, WaitNamedPipeW};
+#[cfg(windows)] pub use funcs::extra::kernel32::{GetOverlappedResult, ConnectNamedPipe};
+#[cfg(windows)] pub use funcs::extra::kernel32::{DisconnectNamedPipe, OpenProcess};
+#[cfg(windows)] pub use funcs::extra::kernel32::{MoveFileExW, VirtualProtect};
+#[cfg(windows)] pub use funcs::extra::kernel32::{RemoveDirectoryW};
+#[cfg(windows)] pub use funcs::extra::msvcrt::{get_osfhandle, open_osfhandle};
+#[cfg(windows)] pub use funcs::extra::winsock::{ioctlsocket};
+
+#[cfg(any(target_os = "linux",
+          target_os = "android",
+          target_os = "freebsd",
+          target_os = "dragonfly",
+          target_os = "bitrig",
+          target_os = "openbsd",
+          target_os = "haiku"))]
+pub use consts::os::posix01::{CLOCK_REALTIME, CLOCK_MONOTONIC};
+
+#[cfg(any(target_os = "linux", target_os = "android"))]
+pub use funcs::posix01::unistd::{fdatasync};
+#[cfg(any(target_os = "linux", target_os = "android"))]
+pub use types::os::arch::extra::{sockaddr_ll};
+#[cfg(any(target_os = "linux", target_os = "android"))]
+pub use consts::os::extra::{AF_PACKET};
+
+#[cfg(all(unix, not(any(target_os = "freebsd", target_os = "bitrig", target_os = "openbsd", target_os = "haiku"))))]
+pub use consts::os::extra::{MAP_STACK};
+
+#[cfg(any(target_os = "freebsd", target_os = "dragonfly"))]
+pub use consts::os::bsd44::{TCP_KEEPIDLE};
+
+#[cfg(any(target_os = "macos", target_os = "ios"))]
+pub use consts::os::bsd44::{TCP_KEEPALIVE};
+#[cfg(any(target_os = "macos", target_os = "ios"))]
+pub use consts::os::extra::{F_FULLFSYNC};
+
+#[cfg(any(target_os = "macos", target_os = "ios"))]
+pub use types::os::arch::extra::{mach_timebase_info};
+
+
+#[cfg(all(not(windows), not(target_os = "haiku")))]
+>>>>>>> Merge changes for Haiku with current post 0.12 rust
 #[link(name = "c")]
 #[link(name = "m")]
 extern {}
 
+<<<<<<< HEAD
 // libnacl provides functions that require a trip through the IRT to work.
 // ie: _exit, mmap, nanosleep, etc. Anything that would otherwise require a trip
 // to the kernel.
@@ -163,6 +307,14 @@ extern {}
 extern {}
 
 pub mod types {
+=======
+#[cfg(target_os = "haiku")]
+#[link(name = "root")]
+#[link(name = "network")]
+
+extern {}
+    pub mod types {
+>>>>>>> Merge changes for Haiku with current post 0.12 rust
 
     // Types tend to vary *per architecture* so we pull their definitions out
     // into this module.
@@ -2180,6 +2332,212 @@ pub mod types {
                 }
 
                 pub type mach_timebase_info_data_t = mach_timebase_info;
+            }
+        }
+    }
+    
+    #[cfg(target_os = "haiku")]
+    pub mod os {
+        pub mod common {
+            pub mod posix01 {
+                use types::common::c95::{c_void};
+                use types::os::arch::c95::{c_char, c_int, size_t,
+                                                 time_t, suseconds_t, c_long};
+
+                pub type pthread_t = u32;
+
+                #[repr(C)]
+                pub struct glob_t {
+                    pub gl_pathc:  size_t,
+                    pub __unused1: size_t,
+                    pub gl_offs:   size_t,
+                    pub __unused2: c_int,
+                    pub gl_pathv:  *mut *mut c_char,
+
+                    pub __unused3: *mut c_void,
+
+                    pub __unused4: *mut c_void,
+                    pub __unused5: *mut c_void,
+                    pub __unused6: *mut c_void,
+                    pub __unused7: *mut c_void,
+                    pub __unused8: *mut c_void,
+                }
+
+                #[repr(C)]
+                pub struct timeval {
+                    pub tv_sec: time_t,
+                    pub tv_usec: suseconds_t,
+                }
+
+                #[repr(C)]
+                pub struct timespec {
+                    pub tv_sec: time_t,
+                    pub tv_nsec: c_long,
+                }
+
+                pub enum timezone {}
+                
+                // TODO: find whether this definition is correct
+                pub type sighandler_t = size_t;
+            }
+            pub mod bsd44 {
+                use types::os::arch::c95::{c_char, c_int, c_uint};
+
+                pub type socklen_t = u32;
+                pub type sa_family_t = u8;
+                pub type in_port_t = u16;
+                pub type in_addr_t = u32;
+                #[repr(C)]
+                pub struct sockaddr {
+                    pub sa_len: u8,
+                    pub sa_family: sa_family_t,
+                    pub sa_data: [u8, ..30],
+                }
+                #[repr(C)]
+                pub struct sockaddr_storage {
+                    pub ss_len: u8,
+                    pub ss_family: sa_family_t,
+                    pub __ss_pad1: [u8, ..6],
+                    pub __ss_align: i64,
+                    pub __ss_pad2: [u8, ..112],
+                }
+                #[repr(C)]
+                pub struct sockaddr_in {
+                    pub sin_len: u8,
+                    pub sin_family: sa_family_t,
+                    pub sin_port: u16,
+                    pub sin_addr: in_addr,
+                    pub sin_zero: [u8, ..24],
+                }
+                #[repr(C)]
+                pub struct in_addr {
+                    pub s_addr: in_addr_t,
+                }
+                #[repr(C)]
+                pub struct sockaddr_in6 {
+                    pub sin6_len: u8,
+                    pub sin6_family: u8,
+                    pub sin6_port: u16,
+                    pub sin6_flowinfo: u32,
+                    pub sin6_addr: in6_addr,
+                    pub sin6_scope_id: u32,
+                }
+                #[repr(C)]
+                pub struct in6_addr {
+                    pub s6_addr: [u16, ..8] // In Haiku it is actually defined as 16 u8
+                }
+                #[repr(C)]
+                pub struct ip_mreq {
+                    pub imr_multiaddr: in_addr,
+                    pub imr_interface: in_addr,
+                }
+                #[repr(C)]
+                pub struct ip6_mreq {
+                    pub ipv6mr_multiaddr: in6_addr,
+                    pub ipv6mr_interface: c_uint,
+                }
+                #[repr(C)]
+                pub struct addrinfo {
+                    pub ai_flags: c_int,
+                    pub ai_family: c_int,
+                    pub ai_socktype: c_int,
+                    pub ai_protocol: c_int,
+                    pub ai_addrlen: socklen_t,
+                    pub ai_canonname: *mut c_char,
+                    pub ai_addr: *mut sockaddr,
+                    pub ai_next: *mut addrinfo,
+                }
+                #[repr(C)]
+                pub struct sockaddr_un {
+                    pub sun_len: u8,
+                    pub sun_family: u8,
+                    pub sun_path: [c_char, ..126]
+                }
+            }
+        }
+        
+        pub mod arch {
+            pub mod c95 {
+                pub type c_char = i8;
+                pub type c_schar = i8;
+                pub type c_uchar = u8;
+                pub type c_short = i16;
+                pub type c_ushort = u16;
+                pub type c_int = i32;
+                pub type c_uint = u32;
+                pub type c_long = i32;
+                pub type c_ulong = u32;
+                pub type c_float = f32;
+                pub type c_double = f64;
+                pub type size_t = u32;
+                pub type ptrdiff_t = i32;
+                pub type clock_t = i32;
+                pub type time_t = i32;
+                pub type suseconds_t = i32;
+                pub type wchar_t = i32;
+            }
+            pub mod c99 {
+                pub type c_longlong = i64;
+                pub type c_ulonglong = u64;
+                pub type intptr_t = i32;
+                pub type uintptr_t = u32;
+                pub type intmax_t = i64;
+                pub type uintmax_t = u64;
+            }
+            pub mod posix88 {
+                pub type off_t = i64;
+                pub type dev_t = i32;
+                pub type ino_t = i64;
+                pub type pid_t = i32;
+                pub type uid_t = u32;
+                pub type gid_t = u32;
+                pub type useconds_t = u32;
+                pub type mode_t = u32;
+                pub type ssize_t = i32;
+            }
+            pub mod posix01 {
+                use types::os::arch::c95::{time_t};
+                use types::os::arch::posix88::{dev_t, gid_t, ino_t};
+                use types::os::arch::posix88::{mode_t, off_t};
+                use types::os::arch::posix88::{uid_t};
+
+                pub type nlink_t = i32;
+                pub type blksize_t = i32;
+                pub type blkcnt_t = i64;
+
+                #[repr(C)]
+                pub struct stat {
+                    pub st_dev: dev_t,
+                    pub st_ino: ino_t,
+                    pub st_mode: mode_t,
+                    pub st_nlink: nlink_t,
+                    pub st_uid: uid_t,
+                    pub st_gid: gid_t,
+                    pub st_size: off_t,
+                    pub st_rdev: dev_t,
+                    pub st_blksize: blksize_t,
+                    pub st_atime: time_t,
+                    pub st_atime_nsec: i32,
+                    pub st_mtime: time_t,
+                    pub st_mtime_nsec: i32,
+                    pub st_ctime: time_t,
+                    pub st_ctime_nsec: i32,
+                    pub st_crtime: time_t,
+                    pub st_crtime_nsec: i32,
+                    pub st_type: u32,
+                    pub st_blocks: blkcnt_t,
+                }
+                
+                #[repr(C)]
+                pub struct utimbuf {
+                    pub actime: time_t,
+                    pub modtime: time_t,
+                }
+
+                #[repr(C)]
+                pub struct pthread_attr_t {
+                    pub __size: [u32, ..4]
+                }
             }
         }
     }
@@ -4623,6 +4981,330 @@ pub mod consts {
             pub const _SC_XBS5_LPBIG_OFFBIG : c_int = 125;
         }
     }
+    
+    #[cfg(target_os = "haiku")]
+    pub mod os {
+        pub mod c95 {
+            use types::os::arch::c95::{c_int, c_uint};
+
+            pub const EXIT_FAILURE : c_int = 1;
+            pub const EXIT_SUCCESS : c_int = 0;
+            pub const RAND_MAX : c_int = 2147483647;
+            pub const EOF : c_int = -1;
+            pub const SEEK_SET : c_int = 0;
+            pub const SEEK_CUR : c_int = 1;
+            pub const SEEK_END : c_int = 2;
+            pub const _IOFBF : c_int = 0;
+            pub const _IONBF : c_int = 2;
+            pub const _IOLBF : c_int = 1;
+            pub const BUFSIZ : c_uint = 8192_u32;
+            pub const FOPEN_MAX : c_uint = 128_u32;
+            pub const FILENAME_MAX : c_uint = 256_u32;
+            pub const L_tmpnam : c_uint = 512_u32;
+            pub const TMP_MAX : c_uint = 32768_u32;
+        }
+        pub mod c99 {
+        }
+        pub mod posix88 {
+            use types::common::c95::c_void;
+            use types::os::arch::c95::c_int;
+            use types::os::arch::posix88::mode_t;
+
+            pub const O_RDONLY : c_int = 0;
+            pub const O_WRONLY : c_int = 1;
+            pub const O_RDWR : c_int = 2;
+            pub const O_APPEND : c_int = 8;
+            pub const O_CREAT : c_int = 512;
+            pub const O_EXCL : c_int = 256;
+            pub const O_TRUNC : c_int = 1024;
+            pub const S_IFIFO : mode_t = 61440;
+            pub const S_IFCHR : mode_t = 49152;
+            pub const S_IFBLK : mode_t = 24576;
+            pub const S_IFDIR : mode_t = 16384;
+            pub const S_IFREG : mode_t = 32768;
+            pub const S_IFLNK : mode_t = 40960;
+            pub const S_IFMT : mode_t = 61440;
+            pub const S_IEXEC : mode_t = 64;
+            pub const S_IWRITE : mode_t = 128;
+            pub const S_IREAD : mode_t = 256;
+            pub const S_IRWXU : mode_t = 448;
+            pub const S_IXUSR : mode_t = 64;
+            pub const S_IWUSR : mode_t = 128;
+            pub const S_IRUSR : mode_t = 256;
+            pub const F_OK : c_int = 0;
+            pub const R_OK : c_int = 4;
+            pub const W_OK : c_int = 2;
+            pub const X_OK : c_int = 1;
+            pub const STDIN_FILENO : c_int = 0;
+            pub const STDOUT_FILENO : c_int = 1;
+            pub const STDERR_FILENO : c_int = 2;
+            pub const F_LOCK : c_int = 1;
+            pub const F_TEST : c_int = 3;
+            pub const F_TLOCK : c_int = 2;
+            pub const F_ULOCK : c_int = 0;
+            pub const SIGHUP : c_int = 1;
+            pub const SIGINT : c_int = 2;
+            pub const SIGQUIT : c_int = 3;
+            pub const SIGILL : c_int = 4;
+            pub const SIGABRT : c_int = 6;
+            pub const SIGFPE : c_int = 8;
+            pub const SIGKILL : c_int = 9;
+            pub const SIGSEGV : c_int = 11;
+            pub const SIGPIPE : c_int = 7;
+            pub const SIGALRM : c_int = 14;
+            pub const SIGTERM : c_int = 15;
+
+            pub const PROT_NONE : c_int = 0;
+            pub const PROT_READ : c_int = 1;
+            pub const PROT_WRITE : c_int = 2;
+            pub const PROT_EXEC : c_int = 4;
+
+            pub const MAP_FILE : c_int = 0x00; // Warning: Haiku does not have a MAP_FILE, but libstd/os.rs requires it
+            pub const MAP_SHARED : c_int = 0x01;
+            pub const MAP_PRIVATE : c_int = 0x02;
+            pub const MAP_FIXED : c_int = 0x04;
+            pub const MAP_ANON : c_int = 0x08;
+
+            pub const MAP_FAILED : *mut c_void = -1 as *mut c_void;
+            
+            //pub const MCL_CURRENT : c_int = 0x0001;
+            //pub const MCL_FUTURE : c_int = 0x0002;
+
+            pub const MS_SYNC : c_int = 0x02;
+            pub const MS_ASYNC : c_int = 0x01;
+            pub const MS_INVALIDATE : c_int = 0x04;
+
+            pub const EPERM : c_int = 2147483633;
+            pub const ENOENT : c_int = 2147459069;
+            pub const ESRCH : c_int = 2147454963;
+            pub const EINTR : c_int = 2147483638;
+            pub const EIO : c_int = 2147483647;
+            pub const ENXIO : c_int = 2147454965;
+            pub const E2BIG : c_int = 2147454975;
+            pub const ENOEXEC : c_int = 2147478782;
+            pub const EBADF : c_int = 2147459072;
+            pub const ECHILD : c_int = 2147454974;
+            pub const EDEADLK : c_int = 2147454973;
+            pub const ENOMEM : c_int = 2147454976;
+            pub const EACCES : c_int = 2147483646;
+            pub const EFAULT : c_int = 2147478783;
+//            pub const ENOTBLK : c_int = 15;
+            pub const EBUSY : c_int = 2147483634;
+            pub const EEXIST : c_int = 2147459070;
+            pub const EXDEV : c_int = 2147459061;
+            pub const ENODEV : c_int = 2147454969;
+            pub const ENOTDIR : c_int = 2147459067;
+            pub const EISDIR : c_int = 2147459063;
+            pub const EINVAL : c_int = 2147483643;
+            pub const ENFILE : c_int = 2147454970;
+            pub const EMFILE : c_int = 2147459062;
+            pub const ENOTTY : c_int = 2147454966;
+            pub const ETXTBSY : c_int = 2147454917;
+            pub const EFBIG : c_int = 2147454972;
+            pub const ENOSPC : c_int = 2147459065;
+            pub const ESPIPE : c_int = 2147454964;
+            pub const EROFS : c_int = 2147459064;
+            pub const EMLINK : c_int = 2147454971;
+            pub const EPIPE : c_int = 2147459059;
+            pub const EDOM : c_int = 2147454960;
+            pub const ERANGE : c_int = 2147454959;
+            pub const EAGAIN : c_int = 2147483637;
+            pub const EWOULDBLOCK : c_int = 2147483637;
+            pub const EINPROGRESS : c_int = 2147454940;
+            pub const EALREADY : c_int = 2147454939;
+            pub const ENOTSOCK : c_int = 2147454932;
+            pub const EDESTADDRREQ : c_int = 2147454928;
+            pub const EMSGSIZE : c_int = 2147454934;
+            pub const EPROTOTYPE : c_int = 2147454958;
+            pub const ENOPROTOOPT : c_int = 2147454942;
+            pub const EPROTONOSUPPORT : c_int = 2147454957;
+//            pub const ESOCKTNOSUPPORT : c_int = 44;
+            pub const EOPNOTSUPP : c_int = 2147454933;
+            pub const EPFNOSUPPORT : c_int = 2147454956;
+            pub const EAFNOSUPPORT : c_int = 2147454955;
+            pub const EADDRINUSE : c_int = 2147454954;
+            pub const EADDRNOTAVAIL : c_int = 2147454953;
+            pub const ENETDOWN : c_int = 2147454953;
+            pub const ENETUNREACH : c_int = 2147454951;
+            pub const ENETRESET : c_int = 2147454950;
+            pub const ECONNABORTED : c_int = 2147454949;
+            pub const ECONNRESET : c_int = 2147454948;
+            pub const ENOBUFS : c_int = 2147454941;
+            pub const EISCONN : c_int = 2147454947;
+            pub const ENOTCONN : c_int = 2147454946;
+            pub const ESHUTDOWN : c_int = 2147454945;
+//            pub const ETOOMANYREFS : c_int = 59;
+            pub const ETIMEDOUT : c_int = 2147483639;
+            pub const ECONNREFUSED : c_int = 2147454944;
+            pub const ELOOP : c_int = 2147459060;
+            pub const ENAMETOOLONG : c_int = 2147459068;
+            pub const EHOSTDOWN : c_int = 2147454931;
+            pub const EHOSTUNREACH : c_int = 2147454943;
+            pub const ENOTEMPTY : c_int = 2147459066;
+//            pub const EPROCLIM : c_int = 67;
+//            pub const EUSERS : c_int = 68;
+            pub const EDQUOT : c_int = 2147454927;
+            pub const ESTALE : c_int = 2147454936;
+//            pub const EREMOTE : c_int = 71;
+//            pub const EBADRPC : c_int = 72;
+//            pub const ERPCMISMATCH : c_int = 73;
+//            pub const EPROGUNAVAIL : c_int = 74;
+//            pub const EPROGMISMATCH : c_int = 75;
+//            pub const EPROCUNAVAIL : c_int = 76;
+            pub const ENOLCK : c_int = 2147454968;
+            pub const ENOSYS : c_int = 2147454967;
+//            pub const EFTYPE : c_int = 79;
+//            pub const EAUTH : c_int = 80;
+//            pub const ENEEDAUTH : c_int = 81;
+            pub const EIDRM : c_int = 2147454926;
+            pub const ENOMSG : c_int = 2147454937;
+            pub const EOVERFLOW : c_int = 2147454935;
+            pub const ECANCELED : c_int = 2147454929;
+            pub const EILSEQ : c_int = 2147454938;
+            pub const ENOATTR : c_int = 2147454916;
+//            pub const EDOOFUS : c_int = 88;
+            pub const EBADMSG : c_int = 2147454930;
+            pub const EMULTIHOP : c_int = 2147454925;
+            pub const ENOLINK : c_int = 2147454923;
+            pub const EPROTO : c_int = 2147454919;
+//            pub const ENOMEDIUM : c_int = 93;
+//            pub const EUNUSED94 : c_int = 94;
+//            pub const EUNUSED95 : c_int = 95;
+//            pub const EUNUSED96 : c_int = 96;
+//            pub const EUNUSED97 : c_int = 97;
+//            pub const EUNUSED98 : c_int = 98;
+//            pub const EASYNC : c_int = 99;
+//            pub const ELAST : c_int = 99;
+        }
+        pub mod posix01 {
+            use types::os::arch::c95::{c_int, size_t};
+
+            pub const F_GETFL : c_int = 0x0008;
+            pub const F_SETFL : c_int = 0x0010;
+
+            pub const SIGTRAP : c_int = 22;
+            pub const SIGPIPE: c_int = 7;
+            pub const SIG_IGN: size_t = 1;
+
+            pub const GLOB_APPEND   : c_int = 0x0001;
+            pub const GLOB_DOOFFS   : c_int = 0x0002;
+            pub const GLOB_ERR      : c_int = 0x0004;
+            pub const GLOB_MARK     : c_int = 0x0008;
+            pub const GLOB_NOCHECK  : c_int = 0x0010;
+            pub const GLOB_NOSORT   : c_int = 0x0020;
+            pub const GLOB_NOESCAPE : c_int = 0x2000;
+
+            pub const GLOB_NOSPACE  : c_int = -1;
+            pub const GLOB_ABORTED  : c_int = -2;
+            pub const GLOB_NOMATCH  : c_int = -3;
+
+            pub const POSIX_MADV_NORMAL : c_int = 1;
+            pub const POSIX_MADV_RANDOM : c_int = 3;
+            pub const POSIX_MADV_SEQUENTIAL : c_int = 2;
+            pub const POSIX_MADV_WILLNEED : c_int = 4;
+            pub const POSIX_MADV_DONTNEED : c_int = 5;
+
+            pub const _SC_IOV_MAX : c_int = 32;
+            pub const _SC_GETGR_R_SIZE_MAX : c_int = 25;
+            pub const _SC_GETPW_R_SIZE_MAX : c_int = 26;
+//            pub const _SC_LOGIN_NAME_MAX : c_int = 73;
+//            pub const _SC_MQ_PRIO_MAX : c_int = 75;
+            pub const _SC_THREAD_ATTR_STACKADDR : c_int = 48;
+            pub const _SC_THREAD_ATTR_STACKSIZE : c_int = 49;
+//            pub const _SC_THREAD_DESTRUCTOR_ITERATIONS : c_int = 85;
+//            pub const _SC_THREAD_KEYS_MAX : c_int = 86;
+//            pub const _SC_THREAD_PRIO_INHERIT : c_int = 87;
+//            pub const _SC_THREAD_PRIO_PROTECT : c_int = 88;
+            pub const _SC_THREAD_PRIORITY_SCHEDULING : c_int = 50;
+            pub const _SC_THREAD_PROCESS_SHARED : c_int = 46;
+//            pub const _SC_THREAD_SAFE_FUNCTIONS : c_int = 91;
+            pub const _SC_THREAD_STACK_MIN : c_int = 47;
+//            pub const _SC_THREAD_THREADS_MAX : c_int = 94;
+            pub const _SC_THREADS : c_int = 31;
+//            pub const _SC_TTY_NAME_MAX : c_int = 101;
+            pub const _SC_ATEXIT_MAX : c_int = 37;
+
+            pub const PTHREAD_CREATE_JOINABLE: c_int = 0;
+            pub const PTHREAD_CREATE_DETACHED: c_int = 1;
+
+            pub const PTHREAD_STACK_MIN: size_t = 8192;
+
+            pub const CLOCK_REALTIME: c_int = 0;
+            pub const CLOCK_MONOTONIC: c_int = 4;
+        }
+        pub mod posix08 {
+        }
+        pub mod bsd44 {
+            use types::os::arch::c95::c_int;
+            
+            // In Haiku these are prefixed with POSIX_
+            pub const MADV_NORMAL : c_int = 1;
+            pub const MADV_RANDOM : c_int = 3;
+            pub const MADV_SEQUENTIAL : c_int = 2;
+            pub const MADV_WILLNEED : c_int = 4;
+            pub const MADV_DONTNEED : c_int = 5;
+
+            pub const AF_INET: c_int = 1;
+            pub const AF_INET6: c_int = 6;
+            pub const AF_UNIX: c_int = 9;
+            pub const SOCK_STREAM: c_int = 1;
+            pub const SOCK_DGRAM: c_int = 2;
+            pub const SOCK_RAW: c_int = 3;
+            pub const IPPROTO_TCP: c_int = 6;
+            pub const IPPROTO_IP: c_int = 0;
+            pub const IPPROTO_IPV6: c_int = 41;
+            pub const IP_MULTICAST_TTL: c_int = 10;
+            pub const IP_MULTICAST_LOOP: c_int = 11;
+            pub const IP_TTL: c_int = 4;
+            pub const IP_ADD_MEMBERSHIP: c_int = 12;
+            pub const IP_DROP_MEMBERSHIP: c_int = 13;
+            pub const IP_HDRINCL: c_int = 2;
+
+            pub const TCP_NODELAY: c_int = 1;
+            pub const SOL_SOCKET: c_int = -1;
+            pub const SO_KEEPALIVE: c_int = 0x0010;
+            pub const SO_BROADCAST: c_int = 0x0002;
+            pub const SO_REUSEADDR: c_int = 0x0040;
+            pub const SO_ERROR: c_int = 0x40000007;
+
+            pub const SHUT_RD: c_int = 0;
+            pub const SHUT_WR: c_int = 1;
+            pub const SHUT_RDWR: c_int = 2;
+        }
+        pub mod extra {
+            use types::os::arch::c95::c_int;
+
+            pub const O_NONBLOCK : c_int = 0x00000080;
+            pub const O_SYNC : c_int = 0x00010000;
+            pub const IPPROTO_RAW: c_int = 255;
+        }
+        pub mod sysconf {
+            use types::os::arch::c95::c_int;
+
+            pub const _SC_ARG_MAX : c_int = 15;
+            pub const _SC_CHILD_MAX : c_int = 16;
+            pub const _SC_CLK_TCK : c_int = 17;
+            pub const _SC_NGROUPS_MAX : c_int = 19;
+            pub const _SC_OPEN_MAX : c_int = 20;
+            pub const _SC_JOB_CONTROL : c_int = 18;
+            pub const _SC_SAVED_IDS : c_int = 21;
+            pub const _SC_VERSION : c_int = 24;
+            pub const _SC_STREAM_MAX : c_int = 22;
+            pub const _SC_TZNAME_MAX : c_int = 23;
+            pub const _SC_MAPPED_FILES : c_int = 45;
+            pub const _SC_MEMORY_PROTECTION : c_int = 52;
+            pub const _SC_REALTIME_SIGNALS : c_int = 51;
+            pub const _SC_SEMAPHORES : c_int = 30;
+            pub const _SC_TIMERS : c_int = 58;
+            pub const _SC_DELAYTIMER_MAX : c_int = 56;
+            pub const _SC_PAGESIZE : c_int = 27;
+            pub const _SC_RTSIG_MAX : c_int = 54;
+            pub const _SC_SEM_NSEMS_MAX : c_int = 28;
+            pub const _SC_SEM_VALUE_MAX : c_int = 29;
+            pub const _SC_SIGQUEUE_MAX : c_int = 53;
+            pub const _SC_TIMER_MAX : c_int = 57;
+        }
+    }
 }
 
 
@@ -4941,7 +5623,11 @@ pub mod funcs {
               target_os = "dragonfly",
               target_os = "bitrig",
               target_os = "openbsd",
+<<<<<<< HEAD
               target_os = "nacl"))]
+=======
+              target_os = "haiku"))]
+>>>>>>> Merge changes for Haiku with current post 0.12 rust
     pub mod posix88 {
         pub mod stat_ {
             use types::os::arch::c95::{c_char, c_int};
@@ -4959,7 +5645,11 @@ pub mod funcs {
                           target_os = "openbsd",
                           target_os = "android",
                           target_os = "ios",
+<<<<<<< HEAD
                           target_os = "nacl"))]
+=======
+                          target_os = "haiku"))]
+>>>>>>> Merge changes for Haiku with current post 0.12 rust
                 pub fn fstat(fildes: c_int, buf: *mut stat) -> c_int;
 
                 #[cfg(target_os = "macos")]
@@ -4977,7 +5667,11 @@ pub mod funcs {
                           target_os = "openbsd",
                           target_os = "android",
                           target_os = "ios",
+<<<<<<< HEAD
                           target_os = "nacl"))]
+=======
+                          target_os = "haiku"))]
+>>>>>>> Merge changes for Haiku with current post 0.12 rust
                 pub fn stat(path: *const c_char, buf: *mut stat) -> c_int;
 
                 #[cfg(target_os = "macos")]
@@ -5227,7 +5921,11 @@ pub mod funcs {
               target_os = "dragonfly",
               target_os = "bitrig",
               target_os = "openbsd",
+<<<<<<< HEAD
               target_os = "nacl"))]
+=======
+              target_os = "haiku"))]
+>>>>>>> Merge changes for Haiku with current post 0.12 rust
     pub mod posix01 {
         pub mod stat_ {
             use types::os::arch::c95::{c_char, c_int};
@@ -5241,7 +5939,11 @@ pub mod funcs {
                           target_os = "openbsd",
                           target_os = "android",
                           target_os = "ios",
+<<<<<<< HEAD
                           target_os = "nacl"))]
+=======
+                          target_os = "haiku"))]
+>>>>>>> Merge changes for Haiku with current post 0.12 rust
                 pub fn lstat(path: *const c_char, buf: *mut stat) -> c_int;
 
                 #[cfg(target_os = "macos")]
@@ -5351,7 +6053,11 @@ pub mod funcs {
               target_os = "dragonfly",
               target_os = "bitrig",
               target_os = "openbsd",
+<<<<<<< HEAD
               target_os = "nacl"))]
+=======
+              target_os = "haiku"))]
+>>>>>>> Merge changes for Haiku with current post 0.12 rust
     pub mod posix08 {
         pub mod unistd {
         }
@@ -5360,7 +6066,8 @@ pub mod funcs {
     #[cfg(not(windows))]
     pub mod bsd43 {
         use types::common::c95::{c_void};
-        use types::os::common::bsd44::{socklen_t, sockaddr, ifaddrs};
+        use types::os::common::bsd44::{socklen_t, sockaddr};
+        #[cfg(not(target_os = "haiku"))] use types::os::common::bsd44::{ifaddrs};
         use types::os::arch::c95::{c_int, size_t};
         use types::os::arch::posix88::ssize_t;
 
@@ -5390,8 +6097,8 @@ pub mod funcs {
             pub fn sendto(socket: c_int, buf: *const c_void, len: size_t,
                           flags: c_int, addr: *const sockaddr,
                           addrlen: socklen_t) -> ssize_t;
-            pub fn getifaddrs(ifap: *mut *mut ifaddrs) -> c_int;
-            pub fn freeifaddrs(ifa: *mut ifaddrs);
+            #[cfg(not(target_os = "haiku"))] pub fn getifaddrs(ifap: *mut *mut ifaddrs) -> c_int;
+            #[cfg(not(target_os = "haiku"))] pub fn freeifaddrs(ifa: *mut ifaddrs);
             pub fn shutdown(socket: c_int, how: c_int) -> c_int;
         }
     }
@@ -5499,6 +6206,16 @@ pub mod funcs {
 
     #[cfg(target_os = "windows")]
     pub mod bsd44 {
+    }
+    
+    #[cfg(target_os = "haiku")]
+    pub mod bsd44 {
+        use types::os::arch::c95::{c_int, c_ulong};
+
+        extern {
+            pub fn ioctl(d: c_int, request: c_ulong, ...) -> c_int;
+            pub fn getdtablesize() -> c_int;
+        }
     }
 
     #[cfg(any(target_os = "macos", target_os = "ios"))]

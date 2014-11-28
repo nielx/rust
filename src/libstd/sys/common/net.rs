@@ -912,6 +912,7 @@ impl UdpSocket {
         Ok(())
     }
 
+    #[cfg(not(target_os = "haiku"))]
     pub fn join_multicast(&mut self, multi: IpAddr) -> IoResult<()> {
         match multi {
             Ipv4Addr(..) => {
@@ -922,6 +923,21 @@ impl UdpSocket {
             }
         }
     }
+    #[cfg(target_os = "haiku")]
+    pub fn join_multicast(&mut self, multi: IpAddr) -> IoResult<()> {
+        use io::IoErrorKind;
+        match multi {
+            Ipv4Addr(..) => {
+                self.set_membership(multi, libc::IP_ADD_MEMBERSHIP)
+            }
+            Ipv6Addr(..) => {
+                // Do nothing
+                Err(IoError{ kind: IoErrorKind::OtherIoError, desc: "Not implemented", detail: None})
+            }
+        }
+    }
+    
+    #[cfg(not(target_os = "haiku"))]
     pub fn leave_multicast(&mut self, multi: IpAddr) -> IoResult<()> {
         match multi {
             Ipv4Addr(..) => {
@@ -932,6 +948,20 @@ impl UdpSocket {
             }
         }
     }
+    #[cfg(target_os = "haiku")]
+    pub fn leave_multicast(&mut self, multi: IpAddr) -> IoResult<()> {
+        use io::IoErrorKind;
+        match multi {
+            Ipv4Addr(..) => {
+                self.set_membership(multi, libc::IP_DROP_MEMBERSHIP)
+            }
+            Ipv6Addr(..) => {
+                // Do nothing
+                Err(IoError{ kind: IoErrorKind::OtherIoError, desc: "Not implemented", detail: None})
+            }
+        }
+    }
+    
 
     pub fn multicast_time_to_live(&mut self, ttl: int) -> IoResult<()> {
         setsockopt(self.fd(), libc::IPPROTO_IP, libc::IP_MULTICAST_TTL,

@@ -78,6 +78,16 @@ pub fn errno() -> i32 {
         extern { fn __errno_location() -> *const c_int; }
         __errno_location()
     }
+    
+    #[cfg(target_os = "haiku")]
+    fn errno_location() -> *const c_int {
+        extern {
+            fn _errnop() -> *const c_int;
+        }
+        unsafe {
+            _errnop()
+        }
+    }
 
     unsafe {
         (*errno_location()) as i32
@@ -356,7 +366,8 @@ pub fn args() -> Args {
           target_os = "freebsd",
           target_os = "dragonfly",
           target_os = "bitrig",
-          target_os = "openbsd"))]
+          target_os = "openbsd",
+          target_os = "haiku"))]
 pub fn args() -> Args {
     use rt;
     let bytes = rt::args::clone().unwrap_or(Vec::new());

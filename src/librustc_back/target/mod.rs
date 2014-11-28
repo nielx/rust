@@ -72,6 +72,7 @@ mod aarch64_unknown_linux_gnu;
 mod i686_apple_darwin;
 mod i686_pc_windows_gnu;
 mod i686_unknown_dragonfly;
+mod i686_unknown_haiku;
 mod i686_unknown_linux_gnu;
 mod mips_unknown_linux_gnu;
 mod mipsel_unknown_linux_gnu;
@@ -363,6 +364,8 @@ impl Target {
 
             i686_unknown_dragonfly,
             x86_64_unknown_dragonfly,
+            
+            i686_unknown_haiku,
 
             x86_64_unknown_bitrig,
             x86_64_unknown_openbsd,

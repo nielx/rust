@@ -643,7 +643,6 @@ pub fn build_target_config(opts: &Options, sp: &SpanHandler) -> Config {
         Err(e) => {
             sp.handler().fatal(&format!("Error loading target specification: {}", e));
     }
-    };
 
     let (int_type, uint_type) = match &target.target_pointer_width[..] {
         "32" => (ast::TyI32, ast::TyU32),

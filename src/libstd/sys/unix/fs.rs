@@ -303,14 +303,14 @@ fn mkstat(stat: &libc::stat) -> FileStat {
       mktime(stat.st_mtime as u64, stat.st_mtime_nsec as u64)
     }
 
-    #[cfg(not(any(target_os = "linux", target_os = "android")))]
+    #[cfg(not(any(target_os = "linux", target_os = "android", target_os = "haiku")))]
     fn flags(stat: &libc::stat) -> u64 { stat.st_flags as u64 }
-    #[cfg(any(target_os = "linux", target_os = "android"))]
+    #[cfg(any(target_os = "linux", target_os = "android", target_os = "haiku"))]
     fn flags(_stat: &libc::stat) -> u64 { 0 }
 
-    #[cfg(not(any(target_os = "linux", target_os = "android")))]
+    #[cfg(not(any(target_os = "linux", target_os = "android", target_os = "haiku")))]
     fn gen(stat: &libc::stat) -> u64 { stat.st_gen as u64 }
-    #[cfg(any(target_os = "linux", target_os = "android"))]
+    #[cfg(any(target_os = "linux", target_os = "android", target_os = "haiku"))]
     fn gen(_stat: &libc::stat) -> u64 { 0 }
 
     FileStat {

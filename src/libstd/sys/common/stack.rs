@@ -212,6 +212,12 @@ pub unsafe fn record_sp_limit(limit: uint) {
     #[cfg(all(target_arch = "x86", target_os = "windows"))] #[inline(always)]
     unsafe fn target_record_sp_limit(_: uint) {
     }
+    #[cfg(all(target_arch = "x86", target_os = "haiku"))] #[inline(always)]
+    unsafe fn target_record_sp_limit(limit: uint) {
+        // Store in Haiku TLS slot 63 (the last slot)
+        // This should probably be revisited at some point to allocate the TLS port
+        asm!("movl $0, %fs:0xfc" :: "r"(limit) :: "volatile")
+    }
 
     // mips, arm - Some brave soul can port these to inline asm, but it's over
     //             my head personally
@@ -307,6 +313,12 @@ pub unsafe fn get_sp_limit() -> uint {
     #[cfg(all(target_arch = "x86", target_os = "windows"))] #[inline(always)]
     unsafe fn target_get_sp_limit() -> uint {
         return 1024;
+    }
+    #[cfg(all(target_arch = "x86", target_os = "haiku"))] #[inline(always)]
+    unsafe fn target_get_sp_limit() -> uint {
+        let limit;
+        asm!("movl %fs:0xfc, $0" : "=r"(limit) ::: "volatile");
+        return limit;
     }
 
     // mips, arm - Some brave soul can port these to inline asm, but it's over
