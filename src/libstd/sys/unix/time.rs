@@ -81,7 +81,8 @@ mod inner {
     #[cfg(not(any(target_os = "android",
                   target_os = "bitrig",
                   target_os = "openbsd",
-                  target_env = "musl")))]
+                  target_env = "musl",
+                  target_os = "haiku")))]
     #[link(name = "rt")]
     extern {}
 

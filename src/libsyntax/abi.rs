@@ -26,6 +26,7 @@ pub enum Os {
     OsDragonfly,
     OsBitrig,
     OsOpenbsd,
+    OsHaiku,
 }
 
 #[derive(PartialEq, Eq, Hash, RustcEncodable, RustcDecodable, Clone, Copy, Debug)]
@@ -139,6 +140,7 @@ impl fmt::Display for Os {
             OsDragonfly => "dragonfly".fmt(f),
             OsBitrig => "bitrig".fmt(f),
             OsOpenbsd => "openbsd".fmt(f),
+			OsHaiku => "haiku".fmt(f),
         }
     }
 }

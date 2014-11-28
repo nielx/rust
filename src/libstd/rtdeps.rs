@@ -52,3 +52,7 @@ extern {}
 #[cfg(target_os = "ios")]
 #[link(name = "System")]
 extern {}
+
+#[cfg(target_os = "haiku")]
+#[link(name = "network")]
+extern {}

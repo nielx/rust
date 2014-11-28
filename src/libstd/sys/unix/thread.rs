@@ -127,6 +127,13 @@ impl Thread {
             pthread_setname_np(cname.as_ptr());
         }
     }
+    
+    #[cfg(target_os = "haiku")]
+    #[allow(unused_variables)]
+    pub fn set_name(name: &str) {
+   		let cname = CString::new(name).unwrap();
+   		// TODO: seems to be unimplemented in Haiku
+   	}
 
     pub fn sleep(dur: Duration) {
         let mut ts = libc::timespec {
