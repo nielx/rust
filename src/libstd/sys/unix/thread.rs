@@ -124,6 +124,11 @@ impl Thread {
         // Newlib and Illumos has no way to set a thread name.
     }
 
+    #[cfg(target_os = "haiku")]
+    pub fn set_name(_name: &CStr) {
+        // Haiku has no way to set a thread name.
+   	}
+
     pub fn sleep(dur: Duration) {
         let mut secs = dur.as_secs();
         let mut nsecs = dur.subsec_nanos() as libc::c_long;
