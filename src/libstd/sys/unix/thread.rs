@@ -260,6 +260,14 @@ pub unsafe fn set_name(name: &str) {
     pthread_setname_np(cname.as_ptr());
 }
 
+#[cfg(target_os = "haiku")]
+#[allow(unused_variables)]
+pub unsafe fn set_name(name: &str) {
+    let cname = CString::new(name).unwrap();
+    // TODO: seems to be unimplemented on Haiku
+}
+
+
 pub unsafe fn join(native: rust_thread) {
     assert_eq!(pthread_join(native, ptr::null_mut()), 0);
 }

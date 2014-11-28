@@ -54,6 +54,13 @@ mod consts {
     pub const FIOCLEX: libc::c_ulong = 0x6601;
     pub const FIONCLEX: libc::c_ulong = 0x6600;
 }
+#[cfg(target_os = "haiku")]
+mod consts {
+	use libc;
+	pub const FIONBIO: libc::c_ulong = 0xbe000000;
+	pub const FIOCLEX: libc::c_ulong = 0; // TODO: does not exist on Haiku!
+    pub const FIONCLEX: libc::c_ulong = 0; // TODO: does not exist on Haiku!
+}
 pub use self::consts::*;
 
 #[cfg(any(target_os = "macos",
@@ -61,7 +68,8 @@ pub use self::consts::*;
           target_os = "freebsd",
           target_os = "dragonfly",
           target_os = "bitrig",
-          target_os = "openbsd"))]
+          target_os = "openbsd",
+          target_os = "haiku"))]
 pub const MSG_DONTWAIT: libc::c_int = 0x80;
 #[cfg(any(target_os = "linux", target_os = "android"))]
 pub const MSG_DONTWAIT: libc::c_int = 0x40;
@@ -79,6 +87,8 @@ pub const _SC_GETPW_R_SIZE_MAX: libc::c_int = 71;
 pub const _SC_GETPW_R_SIZE_MAX: libc::c_int = 101;
 #[cfg(target_os = "android")]
 pub const _SC_GETPW_R_SIZE_MAX: libc::c_int = 0x0048;
+#[cfg(target_os = "haiku")]
+pub const _SC_GETPW_R_SIZE_MAX: libc::c_int = 26;
 
 #[repr(C)]
 #[cfg(target_os = "linux")]
@@ -120,6 +130,18 @@ pub struct passwd {
     pub pw_gid: libc::gid_t,
     pub pw_dir: *mut libc::c_char,
     pub pw_shell: *mut libc::c_char,
+}
+
+#[repr(C)]
+#[cfg(target_os = "haiku")]
+pub struct passwd {
+    pub pw_name: *mut libc::c_char,
+    pub pw_passwd: *mut libc::c_char,
+    pub pw_uid: libc::uid_t,
+    pub pw_gid: libc::gid_t,
+    pub pw_dir: *mut libc::c_char,
+    pub pw_shell: *mut libc::c_char,
+    pub pw_gecos: *mut libc::c_char,
 }
 
 extern {
@@ -182,7 +204,8 @@ mod select {
           target_os = "dragonfly",
           target_os = "bitrig",
           target_os = "openbsd",
-          target_os = "linux"))]
+          target_os = "linux",
+          target_os = "haiku"))]
 mod select {
     use usize;
     use libc;
@@ -384,4 +407,45 @@ mod signal {
         pub sa_mask: sigset_t,
         pub sa_flags: libc::c_int,
     }
+}
+        
+#[cfg(target_os = "haiku")]
+mod signal {
+    use libc;
+
+    pub const SA_NOCLDSTOP: libc::c_int = 0x01;
+    pub const SA_NOCLDWAIT: libc::c_int = 0x02;
+    pub const SA_NODEFER: libc::c_int = 0x08;
+    pub const SA_ONSTACK: libc::c_int = 0x20;
+    pub const SA_RESETHAND: libc::c_int = 0x04;
+    pub const SA_RESTART: libc::c_int = 0x10;
+    pub const SA_SIGINFO: libc::c_int = 0x40;
+    pub const SIGCHLD: libc::c_int = 5;
+
+    // This definition is not as accurate as it could be, {pid, uid, status} is
+    // actually a giant union. Currently we're only interested in these fields,
+    // however.
+    #[repr(C)]
+    pub struct siginfo {
+        si_signo: libc::c_int,
+        si_code: libc::c_int,
+        si_errno: libc::c_int,
+        pub pid: libc::pid_t,
+        pub uid: libc::uid_t,
+        si_addr: *mut libc::c_void,
+        pub status: libc::c_int,
+    }
+
+    #[repr(C)]
+    pub struct sigaction {
+        pub sa_handler: extern fn(libc::c_int),
+        pub sa_mask: sigset_t,
+        pub sa_flags: libc::c_int,
+        sa_userdata: *mut libc::c_void,
+    }
+    
+    unsafe impl ::marker::Send for sigaction { }
+    unsafe impl ::marker::Sync for sigaction { }
+    
+    pub type sigset_t = u64;
 }
