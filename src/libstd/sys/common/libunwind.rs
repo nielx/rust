@@ -106,6 +106,7 @@ pub type _Unwind_Exception_Cleanup_Fn =
 #[cfg_attr(any(all(target_os = "linux", not(target_env = "musl")),
                target_os = "freebsd",
                target_os = "solaris",
+               target_os="haiku",
                all(target_os = "linux", target_env = "musl", not(target_arch = "x86_64"))),
            link(name = "gcc_s"))]
 #[cfg_attr(all(target_os = "linux", target_env = "musl", target_arch = "x86_64", not(test)),

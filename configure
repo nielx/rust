@@ -428,6 +428,12 @@ case $CFG_OSTYPE in
         CFG_OSTYPE=sun-solaris
         CFG_CPUTYPE=$(isainfo -n)
         ;;
+    Haiku)
+        CFG_OSTYPE=unknown-haiku
+        ;;
+    Haiku)
+        CFG_OSTYPE=unknown-haiku
+        ;;
 
     MINGW*)
         # msys' `uname` does not print gcc configuration, but prints msys
