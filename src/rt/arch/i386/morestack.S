@@ -90,7 +90,8 @@
 	.hidden MORESTACK
 #else
 #if defined(__APPLE__)
-	.private_extern MORESTACK
+	//.private_extern MORESTACK
+	.hidden MORESTACK
 #endif
 #endif
 
