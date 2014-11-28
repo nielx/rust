@@ -52,6 +52,9 @@ pub const FIOCLEX: libc::c_ulong = 0x5451;
               target_arch = "powerpc")))]
 pub const FIOCLEX: libc::c_ulong = 0x6601;
 
+#[cfg(target_os = "haiku")]
+pub const FIOCLEX: libc::c_ulong = 0; // TODO: does not exist on Haiku!
+
 pub const WNOHANG: libc::c_int = 1;
 
 #[cfg(target_os = "linux")]
@@ -67,6 +70,8 @@ pub const _SC_GETPW_R_SIZE_MAX: libc::c_int = 101;
 pub const _SC_GETPW_R_SIZE_MAX: libc::c_int = 48;
 #[cfg(target_os = "android")]
 pub const _SC_GETPW_R_SIZE_MAX: libc::c_int = 0x0048;
+#[cfg(target_os = "haiku")]
+pub const _SC_GETPW_R_SIZE_MAX: libc::c_int = 26;
 
 #[repr(C)]
 #[cfg(target_os = "linux")]
@@ -109,6 +114,18 @@ pub struct passwd {
     pub pw_gid: libc::gid_t,
     pub pw_dir: *mut libc::c_char,
     pub pw_shell: *mut libc::c_char,
+}
+
+#[repr(C)]
+#[cfg(target_os = "haiku")]
+pub struct passwd {
+    pub pw_name: *mut libc::c_char,
+    pub pw_passwd: *mut libc::c_char,
+    pub pw_uid: libc::uid_t,
+    pub pw_gid: libc::gid_t,
+    pub pw_dir: *mut libc::c_char,
+    pub pw_shell: *mut libc::c_char,
+    pub pw_gecos: *mut libc::c_char,
 }
 
 // This is really a function pointer (or a union of multiple function
@@ -402,6 +419,51 @@ mod signal_os {
     }
 
     #[repr(C)]
+    pub struct sigaltstack {
+        pub ss_sp: *mut libc::c_void,
+        pub ss_size: libc::size_t,
+        pub ss_flags: libc::c_int,
+    }
+}
+        
+#[cfg(target_os = "haiku")]
+mod signal_os {
+    use libc;
+    use super::sighandler_t;
+
+    pub const SA_ONSTACK: libc::c_int = 0x20;
+    pub const SA_SIGINFO: libc::c_int = 0x40;
+
+	pub const SIGBUS: libc::c_int = 30;
+	
+	pub const SIGSTKSZ: libc::size_t = 16384;
+    pub const SIG_SETMASK: libc::c_int = 3;
+
+    pub type sigset_t = u64;
+
+    // This definition is not as accurate as it could be, {pid, uid, status} is
+    // actually a giant union. Currently we're only interested in these fields,
+    // however.
+    #[repr(C)]
+    pub struct siginfo {
+        pub _signo: libc::c_int,
+        pub _code: libc::c_int,
+        pub _errno: libc::c_int,
+        pub _pid: libc::pid_t,
+        pub _uid: libc::uid_t,
+        pub si_addr: *mut libc::c_void,
+        pub _status: libc::c_int,
+    }
+
+    #[repr(C)]
+    pub struct sigaction {
+        pub sa_handler: sighandler_t,
+        pub sa_mask: sigset_t,
+        pub sa_flags: libc::c_int,
+        sa_userdata: *mut libc::c_void,
+    }
+    
+        #[repr(C)]
     pub struct sigaltstack {
         pub ss_sp: *mut libc::c_void,
         pub ss_size: libc::size_t,

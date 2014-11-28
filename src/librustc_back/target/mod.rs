@@ -407,6 +407,9 @@ impl Target {
 
             i686_unknown_dragonfly,
             x86_64_unknown_dragonfly,
+            
+            i686_unknown_haiku,
+            x86_64_unknown_haiku,
 
             x86_64_unknown_bitrig,
             x86_64_unknown_openbsd,
