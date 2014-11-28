@@ -59,6 +59,16 @@ pub fn errno() -> i32 {
         extern { fn __errno_location() -> *const c_int; }
         __errno_location()
     }
+    
+    #[cfg(target_os = "haiku")]
+    fn errno_location() -> *const c_int {
+        extern {
+            fn _errnop() -> *const c_int;
+        }
+        unsafe {
+            _errnop()
+        }
+    }
 
     unsafe {
         (*errno_location()) as i32
@@ -255,6 +265,12 @@ pub fn current_exe() -> io::Result<PathBuf> {
     }
 }
 
+#[cfg(target_os = "haiku")]
+pub fn current_exe() -> io::Result<PathBuf> {
+    use io::ErrorKind;
+    Err(io::Error::new(ErrorKind::Other, "Not implemented", None))
+}
+
 pub struct Args {
     iter: vec::IntoIter<OsString>,
     _dont_send_or_sync_me: *mut (),
@@ -356,7 +372,8 @@ pub fn args() -> Args {
           target_os = "dragonfly",
           target_os = "bitrig",
           target_os = "netbsd",
-          target_os = "openbsd"))]
+          target_os = "openbsd",
+          target_os = "haiku"))]
 pub fn args() -> Args {
     use sys_common;
     let bytes = sys_common::args::clone().unwrap_or(Vec::new());

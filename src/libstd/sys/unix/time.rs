@@ -82,7 +82,8 @@ mod inner {
                   target_os = "bitrig",
                   target_os = "netbsd",
                   target_os = "openbsd",
-                  target_env = "musl")))]
+                  target_env = "musl",
+                  target_os = "haiku")))]
     #[link(name = "rt")]
     extern {}
 

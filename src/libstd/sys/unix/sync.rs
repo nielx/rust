@@ -249,3 +249,63 @@ mod os {
     };
     pub const PTHREAD_MUTEX_RECURSIVE: libc::c_int = 1;
 }
+#[cfg(target_os = "haiku")]
+mod os {
+    use libc;
+
+    #[repr(C)]
+    pub struct pthread_mutex_t {
+        flags: u32,
+        lock: i32,
+        unused: i32,
+        owner: i32,
+        owner_count: i32,
+    }
+    #[repr(C)]
+    pub struct pthread_cond_t {
+        flags: u32,
+        unused: i32,
+        mutex: *mut libc::c_void,
+        waiter_count: i32,
+        lock: i32,
+    }
+    #[repr(C)]
+    pub struct pthread_rwlock_t {
+        flags: u32,
+        owner: i32,
+        lock_sem: i32,      // this is actually a union
+        lock_count: i32,
+        reader_count: i32,
+        writer_count: i32,
+        waiters: [*mut libc::c_void; 2],
+    }
+    
+    pub type pthread_mutexattr_t = *mut libc::c_void;
+
+    
+    pub const PTHREAD_MUTEX_INITIALIZER: pthread_mutex_t = pthread_mutex_t {
+        flags: 0,
+        lock: 0,
+        unused: -42,
+        owner: -1,
+        owner_count: 0,
+    };
+    pub const PTHREAD_COND_INITIALIZER: pthread_cond_t = pthread_cond_t {
+        flags: 0,
+        unused: -42,
+        mutex: 0 as *mut _,
+        waiter_count: 0,
+        lock: 0,
+    };
+    pub const PTHREAD_RWLOCK_INITIALIZER: pthread_rwlock_t = pthread_rwlock_t {
+        flags: 0,
+        owner: 0,
+        lock_sem: 0,
+        lock_count: 0,
+        reader_count: 0,
+        writer_count: 0,
+        waiters: [0 as *mut _; 2],
+    };
+
+    pub const PTHREAD_MUTEX_RECURSIVE: libc::c_int = 3;
+}
