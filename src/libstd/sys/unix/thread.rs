@@ -130,6 +130,13 @@ impl Thread {
         // Newlib has no way to set a thread name.
     }
 
+    #[cfg(target_os = "haiku")]
+    #[allow(unused_variables)]
+    pub fn set_name(name: &str) {
+        let cname = CString::new(name).unwrap();
+        // FIXME: seems to be unimplemented in Haiku
+   	}
+
     pub fn sleep(dur: Duration) {
         let mut ts = libc::timespec {
             tv_sec: dur.as_secs() as libc::time_t,

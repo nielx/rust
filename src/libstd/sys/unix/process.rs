@@ -113,6 +113,13 @@ mod status_imp {
     pub fn WTERMSIG(status: i32) -> i32 { status & 0o177 }
 }
 
+#[cfg(any(target_os = "haiku"))]
+mod status_imp {
+    pub fn WIFEXITED(status: i32) -> bool { (status >> 8) == 0 }
+    pub fn WEXITSTATUS(status: i32) -> i32 { status & 0xff }
+    pub fn WTERMSIG(status: i32) -> i32 { (status >> 8) & 0xff }
+}
+
 impl ExitStatus {
     fn exited(&self) -> bool {
         status_imp::WIFEXITED(self.0)

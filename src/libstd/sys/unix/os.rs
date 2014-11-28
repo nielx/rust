@@ -50,6 +50,7 @@ pub fn errno() -> i32 {
                        target_os = "ios",
                        target_os = "freebsd"),
                    link_name = "__error")]
+        #[cfg_attr(target_os = "haiku", link_name = "_errnop")]
         fn errno_location() -> *const c_int;
     }
 
@@ -206,7 +207,7 @@ pub fn current_exe() -> io::Result<PathBuf> {
     ::fs::read_link("/proc/curproc/exe")
 }
 
-#[cfg(any(target_os = "bitrig", target_os = "openbsd"))]
+#[cfg(any(target_os = "bitrig", target_os = "openbsd", target_os = "haiku"))]
 pub fn current_exe() -> io::Result<PathBuf> {
     unsafe {
         let mut mib = [libc::CTL_KERN,
@@ -255,6 +256,47 @@ pub fn current_exe() -> io::Result<PathBuf> {
         v.set_len(sz as usize - 1); // chop off trailing NUL
         Ok(PathBuf::from(OsString::from_vec(v)))
     }
+}
+
+#[cfg(target_os = "haiku")]
+pub fn current_exe() -> io::Result<PathBuf> {
+	// Use Haiku's image info functions
+	#[repr(C)]
+	struct image_info {
+		id: i32,			
+		type_: i32,
+		sequence: i32,
+		init_order: i32,
+		init_routine: *mut libc::c_void,	// function pointer
+		term_routine: *mut libc::c_void,    // function pointer
+		device: libc::dev_t,
+		node: libc::ino_t,
+		name: [libc::c_char; 1024],         // MAXPATHLEN
+		text: *mut libc::c_void,
+		data: *mut libc::c_void,
+		text_size: i32,
+		data_size: i32,
+		api_version: i32,
+		abi: i32,
+	}
+	
+	unsafe {
+		extern {
+			fn _get_next_image_info(team_id: i32, cookie: *mut i32, info: *mut image_info, size: i32) -> i32;
+		}
+		
+		let mut info: image_info = mem::zeroed();
+		let mut cookie: i32 = 0;
+		// the executable can be found at team id 0
+		let result = _get_next_image_info(0, &mut cookie, &mut info, mem::size_of::<image_info>() as i32);
+		if result != 0 {
+			use io::ErrorKind;
+    		Err(io::Error::new(ErrorKind::Other, "Error getting executable path"))
+		} else {
+			let name = CStr::from_ptr(info.name.as_ptr()).to_bytes();
+			Ok(PathBuf::from(OsStr::from_bytes(name)))
+		}
+	}
 }
 
 pub struct Args {
@@ -359,7 +401,8 @@ pub fn args() -> Args {
           target_os = "bitrig",
           target_os = "netbsd",
           target_os = "openbsd",
-          target_os = "nacl"))]
+          target_os = "nacl",
+          target_os = "haiku"))]
 pub fn args() -> Args {
     use sys_common;
     let bytes = sys_common::args::clone().unwrap_or(Vec::new());
