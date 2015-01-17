@@ -2347,7 +2347,7 @@ extern {}
                 pub type pthread_t = u32;
 
                 #[repr(C)]
-                pub struct glob_t {
+                #[derive(Copy)] pub struct glob_t {
                     pub gl_pathc:  size_t,
                     pub __unused1: size_t,
                     pub gl_offs:   size_t,
@@ -2364,18 +2364,18 @@ extern {}
                 }
 
                 #[repr(C)]
-                pub struct timeval {
+                #[derive(Copy)] pub struct timeval {
                     pub tv_sec: time_t,
                     pub tv_usec: suseconds_t,
                 }
 
                 #[repr(C)]
-                pub struct timespec {
+                #[derive(Copy)] pub struct timespec {
                     pub tv_sec: time_t,
                     pub tv_nsec: c_long,
                 }
 
-                pub enum timezone {}
+                #[derive(Copy)] pub enum timezone {}
                 
                 // TODO: find whether this definition is correct
                 pub type sighandler_t = size_t;
@@ -2388,33 +2388,33 @@ extern {}
                 pub type in_port_t = u16;
                 pub type in_addr_t = u32;
                 #[repr(C)]
-                pub struct sockaddr {
+                #[derive(Copy)] pub struct sockaddr {
                     pub sa_len: u8,
                     pub sa_family: sa_family_t,
-                    pub sa_data: [u8, ..30],
+                    pub sa_data: [u8; 30],
                 }
                 #[repr(C)]
-                pub struct sockaddr_storage {
+                #[derive(Copy)] pub struct sockaddr_storage {
                     pub ss_len: u8,
                     pub ss_family: sa_family_t,
-                    pub __ss_pad1: [u8, ..6],
+                    pub __ss_pad1: [u8; 6],
                     pub __ss_align: i64,
-                    pub __ss_pad2: [u8, ..112],
+                    pub __ss_pad2: [u8; 112],
                 }
                 #[repr(C)]
-                pub struct sockaddr_in {
+                #[derive(Copy)] pub struct sockaddr_in {
                     pub sin_len: u8,
                     pub sin_family: sa_family_t,
                     pub sin_port: u16,
                     pub sin_addr: in_addr,
-                    pub sin_zero: [u8, ..24],
+                    pub sin_zero: [u8; 24],
                 }
                 #[repr(C)]
-                pub struct in_addr {
+                #[derive(Copy)] pub struct in_addr {
                     pub s_addr: in_addr_t,
                 }
                 #[repr(C)]
-                pub struct sockaddr_in6 {
+                #[derive(Copy)] pub struct sockaddr_in6 {
                     pub sin6_len: u8,
                     pub sin6_family: u8,
                     pub sin6_port: u16,
@@ -2423,21 +2423,21 @@ extern {}
                     pub sin6_scope_id: u32,
                 }
                 #[repr(C)]
-                pub struct in6_addr {
-                    pub s6_addr: [u16, ..8] // In Haiku it is actually defined as 16 u8
+                #[derive(Copy)] pub struct in6_addr {
+                    pub s6_addr: [u16; 8] // In Haiku it is actually defined as 16 u8
                 }
                 #[repr(C)]
-                pub struct ip_mreq {
+                #[derive(Copy)] pub struct ip_mreq {
                     pub imr_multiaddr: in_addr,
                     pub imr_interface: in_addr,
                 }
                 #[repr(C)]
-                pub struct ip6_mreq {
+                #[derive(Copy)] pub struct ip6_mreq {
                     pub ipv6mr_multiaddr: in6_addr,
                     pub ipv6mr_interface: c_uint,
                 }
                 #[repr(C)]
-                pub struct addrinfo {
+                #[derive(Copy)] pub struct addrinfo {
                     pub ai_flags: c_int,
                     pub ai_family: c_int,
                     pub ai_socktype: c_int,
@@ -2448,10 +2448,10 @@ extern {}
                     pub ai_next: *mut addrinfo,
                 }
                 #[repr(C)]
-                pub struct sockaddr_un {
+                #[derive(Copy)] pub struct sockaddr_un {
                     pub sun_len: u8,
                     pub sun_family: u8,
-                    pub sun_path: [c_char, ..126]
+                    pub sun_path: [c_char; 126]
                 }
             }
         }
@@ -2506,7 +2506,7 @@ extern {}
                 pub type blkcnt_t = i64;
 
                 #[repr(C)]
-                pub struct stat {
+                #[derive(Copy)] pub struct stat {
                     pub st_dev: dev_t,
                     pub st_ino: ino_t,
                     pub st_mode: mode_t,
@@ -2529,14 +2529,14 @@ extern {}
                 }
                 
                 #[repr(C)]
-                pub struct utimbuf {
+                #[derive(Copy)] pub struct utimbuf {
                     pub actime: time_t,
                     pub modtime: time_t,
                 }
 
                 #[repr(C)]
-                pub struct pthread_attr_t {
-                    pub __size: [u32, ..4]
+                #[derive(Copy)] pub struct pthread_attr_t {
+                    pub __size: [u32; 4]
                 }
             }
         }

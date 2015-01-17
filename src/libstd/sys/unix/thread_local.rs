@@ -44,7 +44,8 @@ type pthread_key_t = ::libc::c_ulong;
 #[cfg(any(target_os = "freebsd",
           target_os = "dragonfly",
           target_os = "bitrig",
-          target_os = "openbsd"))]
+          target_os = "openbsd",
+          target_os = "haiku"))]
 type pthread_key_t = ::libc::c_int;
 
 #[cfg(not(any(target_os = "macos",
@@ -52,7 +53,8 @@ type pthread_key_t = ::libc::c_int;
               target_os = "freebsd",
               target_os = "dragonfly",
               target_os = "bitrig",
-              target_os = "openbsd")))]
+              target_os = "openbsd",
+              target_os = "haiku")))]
 type pthread_key_t = ::libc::c_uint;
 
 extern {

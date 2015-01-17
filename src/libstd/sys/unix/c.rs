@@ -429,5 +429,8 @@ mod signal {
         sa_userdata: *mut libc::c_void,
     }
     
+    unsafe impl ::marker::Send for sigaction { }
+    unsafe impl ::marker::Sync for sigaction { }
+    
     pub type sigset_t = u64;
 }

@@ -248,7 +248,7 @@ mod os {
         lock_count: i32,
         reader_count: i32,
         writer_count: i32,
-        waiters: [*mut libc::c_void, ..2],
+        waiters: [*mut libc::c_void; 2],
     }
     
     pub const PTHREAD_MUTEX_INITIALIZER: pthread_mutex_t = pthread_mutex_t { 
@@ -272,6 +272,6 @@ mod os {
         lock_count: 0,
         reader_count: 0,
         writer_count: 0,
-        waiters: [0 as *mut _, ..2],
+        waiters: [0 as *mut _; 2],
     };
 }
