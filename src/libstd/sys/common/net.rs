@@ -925,7 +925,7 @@ impl UdpSocket {
     }
     #[cfg(target_os = "haiku")]
     pub fn join_multicast(&mut self, multi: IpAddr) -> IoResult<()> {
-        use io::IoErrorKind;
+        use old_io::IoErrorKind;
         match multi {
             Ipv4Addr(..) => {
                 self.set_membership(multi, libc::IP_ADD_MEMBERSHIP)
@@ -950,7 +950,7 @@ impl UdpSocket {
     }
     #[cfg(target_os = "haiku")]
     pub fn leave_multicast(&mut self, multi: IpAddr) -> IoResult<()> {
-        use io::IoErrorKind;
+        use old_io::IoErrorKind;
         match multi {
             Ipv4Addr(..) => {
                 self.set_membership(multi, libc::IP_DROP_MEMBERSHIP)

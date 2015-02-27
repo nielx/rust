@@ -785,6 +785,39 @@ pub mod consts {
     pub const EXE_EXTENSION: &'static str = "exe";
 }
 
+/// Constants associated with the current target
+#[cfg(target_os = "haiku")]
+pub mod consts {
+    pub use super::arch_consts::ARCH;
+
+    pub const FAMILY: &'static str = "unix";
+
+    /// A string describing the specific operating system in use: in this
+    /// case, `freebsd`.
+    pub const OS: &'static str = "haiku";
+
+    /// Specifies the filename prefix used for shared libraries on this
+    /// platform: in this case, `lib`.
+    pub const DLL_PREFIX: &'static str = "lib";
+
+    /// Specifies the filename suffix used for shared libraries on this
+    /// platform: in this case, `.so`.
+    pub const DLL_SUFFIX: &'static str = ".so";
+
+    /// Specifies the file extension used for shared libraries on this
+    /// platform that goes after the dot: in this case, `so`.
+    pub const DLL_EXTENSION: &'static str = "so";
+
+    /// Specifies the filename suffix used for executable binaries on this
+    /// platform: in this case, the empty string.
+    pub const EXE_SUFFIX: &'static str = "";
+
+    /// Specifies the file extension, if any, used for executable binaries
+    /// on this platform: in this case, the empty string.
+    pub const EXE_EXTENSION: &'static str = "";
+}
+
+
 #[cfg(target_arch = "x86")]
 mod arch_consts {
     pub const ARCH: &'static str = "x86";

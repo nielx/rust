@@ -125,7 +125,6 @@ pub use funcs::bsd43::*;
 //
 // So the following exports don't follow any particular plan.
 
-<<<<<<< HEAD
 #[cfg(unix)] pub use consts::os::sysconf::*;
 
 #[cfg(unix)] pub use funcs::posix88::mman::*;
@@ -141,154 +140,11 @@ pub use funcs::bsd43::*;
 
 // On NaCl, these libraries are static. Thus it would be a Bad Idea to link them
 // in when creating a test crate.
-#[cfg(not(any(windows, all(target_os = "nacl", test))))]
-=======
-#[cfg(unix)] pub use consts::os::sysconf::{_SC_PAGESIZE};
-#[cfg(unix)] pub use consts::os::posix88::{PROT_READ, PROT_WRITE, PROT_EXEC};
-#[cfg(unix)] pub use consts::os::posix88::{MAP_FILE, MAP_FIXED, MAP_ANON, MAP_PRIVATE, MAP_FAILED};
-#[cfg(unix)] pub use consts::os::posix88::{EACCES, EBADF, EINVAL, ENODEV, ENOMEM};
-#[cfg(unix)] pub use consts::os::posix88::{ECONNREFUSED, ECONNRESET, EPERM, EPIPE};
-#[cfg(unix)] pub use consts::os::posix88::{ENOTCONN, ECONNABORTED, EADDRNOTAVAIL, EINTR};
-#[cfg(unix)] pub use consts::os::posix88::{EADDRINUSE, ENOENT, EISDIR, EAGAIN, EWOULDBLOCK};
-#[cfg(unix)] pub use consts::os::posix88::{ECANCELED, SIGINT, EINPROGRESS};
-#[cfg(unix)] pub use consts::os::posix88::{ENOSYS, ENOTTY, ETIMEDOUT, EMFILE};
-#[cfg(unix)] pub use consts::os::posix88::{SIGTERM, SIGKILL, SIGPIPE, PROT_NONE};
-#[cfg(unix)] pub use consts::os::posix01::{SIG_IGN, F_GETFL, F_SETFL};
-#[cfg(unix)] pub use consts::os::bsd44::{AF_UNIX};
-#[cfg(unix)] pub use consts::os::extra::{O_NONBLOCK};
-
-#[cfg(unix)] pub use types::os::common::posix01::{pthread_t, timespec, timezone};
-
-#[cfg(unix)] pub use types::os::arch::posix88::{uid_t, gid_t};
-#[cfg(unix)] pub use types::os::arch::posix01::{pthread_attr_t};
-#[cfg(unix)] pub use types::os::arch::posix01::{stat, utimbuf};
-#[cfg(all(unix, not(target_os = "haiku")))] pub use types::os::common::bsd44::{ifaddrs};
-#[cfg(unix)] pub use funcs::posix88::unistd::{sysconf, setgid, setsid, setuid, pread, pwrite};
-#[cfg(unix)] pub use funcs::posix88::unistd::{getgid, getuid, getsid};
-#[cfg(unix)] pub use funcs::posix88::unistd::{_PC_NAME_MAX, utime, nanosleep, pathconf, link};
-#[cfg(unix)] pub use funcs::posix88::unistd::{chown};
-#[cfg(unix)] pub use funcs::posix88::mman::{mmap, munmap, mprotect};
-#[cfg(unix)] pub use funcs::posix88::dirent::{opendir, readdir_r, closedir};
-#[cfg(unix)] pub use funcs::posix88::fcntl::{fcntl};
-#[cfg(unix)] pub use funcs::posix88::net::{if_nametoindex};
-#[cfg(unix)] pub use funcs::posix01::stat_::{lstat};
-#[cfg(unix)] pub use funcs::posix01::unistd::{fsync, ftruncate};
-#[cfg(unix)] pub use funcs::posix01::unistd::{readlink, symlink};
-#[cfg(all(unix, not(target_os = "haiku")))] pub use funcs::bsd43::{getifaddrs, freeifaddrs};
-
-#[cfg(windows)] pub use consts::os::c95::{WSAECONNREFUSED, WSAECONNRESET, WSAEACCES};
-#[cfg(windows)] pub use consts::os::c95::{WSAEWOULDBLOCK, WSAENOTCONN, WSAECONNABORTED};
-#[cfg(windows)] pub use consts::os::c95::{WSAEADDRNOTAVAIL, WSAEADDRINUSE, WSAEINTR};
-#[cfg(windows)] pub use consts::os::c95::{WSAEINPROGRESS, WSAEINVAL, WSAEMFILE};
-#[cfg(windows)] pub use consts::os::extra::{ERROR_INSUFFICIENT_BUFFER};
-#[cfg(windows)] pub use consts::os::extra::{O_BINARY, O_NOINHERIT, PAGE_NOACCESS};
-#[cfg(windows)] pub use consts::os::extra::{PAGE_READONLY, PAGE_READWRITE, PAGE_EXECUTE};
-#[cfg(windows)] pub use consts::os::extra::{PAGE_EXECUTE_READ, PAGE_EXECUTE_READWRITE};
-#[cfg(windows)] pub use consts::os::extra::{MEM_COMMIT, MEM_RESERVE, MEM_RELEASE};
-#[cfg(windows)] pub use consts::os::extra::{FILE_MAP_READ, FILE_MAP_WRITE, FILE_MAP_EXECUTE};
-#[cfg(windows)] pub use consts::os::extra::{ERROR_ALREADY_EXISTS, ERROR_NO_DATA};
-#[cfg(windows)] pub use consts::os::extra::{ERROR_FILE_NOT_FOUND, ERROR_INVALID_NAME};
-#[cfg(windows)] pub use consts::os::extra::{ERROR_BROKEN_PIPE, ERROR_INVALID_FUNCTION};
-#[cfg(windows)] pub use consts::os::extra::{ERROR_CALL_NOT_IMPLEMENTED};
-#[cfg(windows)] pub use consts::os::extra::{ERROR_NOTHING_TO_TERMINATE};
-#[cfg(windows)] pub use consts::os::extra::{ERROR_INVALID_HANDLE};
-#[cfg(windows)] pub use consts::os::extra::{TRUE, FALSE, INFINITE};
-#[cfg(windows)] pub use consts::os::extra::{PROCESS_TERMINATE, PROCESS_QUERY_INFORMATION};
-#[cfg(windows)] pub use consts::os::extra::{STILL_ACTIVE, DETACHED_PROCESS};
-#[cfg(windows)] pub use consts::os::extra::{CREATE_NEW_PROCESS_GROUP, CREATE_UNICODE_ENVIRONMENT};
-#[cfg(windows)] pub use consts::os::extra::{FILE_BEGIN, FILE_END, FILE_CURRENT};
-#[cfg(windows)] pub use consts::os::extra::{FILE_GENERIC_READ, FILE_GENERIC_WRITE};
-#[cfg(windows)] pub use consts::os::extra::{FILE_SHARE_READ, FILE_SHARE_WRITE, FILE_SHARE_DELETE};
-#[cfg(windows)] pub use consts::os::extra::{TRUNCATE_EXISTING, CREATE_ALWAYS, OPEN_EXISTING};
-#[cfg(windows)] pub use consts::os::extra::{CREATE_NEW, FILE_APPEND_DATA, FILE_WRITE_DATA};
-#[cfg(windows)] pub use consts::os::extra::{OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL};
-#[cfg(windows)] pub use consts::os::extra::{FILE_FLAG_BACKUP_SEMANTICS, INVALID_HANDLE_VALUE};
-#[cfg(windows)] pub use consts::os::extra::{MOVEFILE_REPLACE_EXISTING};
-#[cfg(windows)] pub use consts::os::extra::{GENERIC_READ, GENERIC_WRITE};
-#[cfg(windows)] pub use consts::os::extra::{VOLUME_NAME_DOS};
-#[cfg(windows)] pub use consts::os::extra::{PIPE_ACCESS_DUPLEX, FILE_FLAG_FIRST_PIPE_INSTANCE};
-#[cfg(windows)] pub use consts::os::extra::{FILE_FLAG_OVERLAPPED, PIPE_TYPE_BYTE};
-#[cfg(windows)] pub use consts::os::extra::{PIPE_READMODE_BYTE, PIPE_WAIT};
-#[cfg(windows)] pub use consts::os::extra::{PIPE_UNLIMITED_INSTANCES, ERROR_ACCESS_DENIED};
-#[cfg(windows)] pub use consts::os::extra::{FILE_WRITE_ATTRIBUTES, FILE_READ_ATTRIBUTES};
-#[cfg(windows)] pub use consts::os::extra::{ERROR_PIPE_BUSY, ERROR_IO_PENDING};
-#[cfg(windows)] pub use consts::os::extra::{ERROR_PIPE_CONNECTED, WAIT_OBJECT_0};
-#[cfg(windows)] pub use consts::os::extra::{ERROR_NOT_FOUND};
-#[cfg(windows)] pub use consts::os::extra::{ERROR_OPERATION_ABORTED};
-#[cfg(windows)] pub use consts::os::extra::{FIONBIO};
-#[cfg(windows)] pub use types::os::common::bsd44::{SOCKET};
-#[cfg(windows)] pub use types::os::common::posix01::{stat, utimbuf};
-#[cfg(windows)] pub use types::os::arch::extra::{HANDLE, BOOL, LPSECURITY_ATTRIBUTES};
-#[cfg(windows)] pub use types::os::arch::extra::{LPCSTR, WORD, DWORD, BYTE, FILETIME};
-#[cfg(windows)] pub use types::os::arch::extra::{LARGE_INTEGER, LPVOID, LONG};
-#[cfg(windows)] pub use types::os::arch::extra::{time64_t, OVERLAPPED, LPCWSTR};
-#[cfg(windows)] pub use types::os::arch::extra::{LPOVERLAPPED, SIZE_T, LPDWORD};
-#[cfg(windows)] pub use types::os::arch::extra::{SECURITY_ATTRIBUTES, WIN32_FIND_DATAW};
-#[cfg(windows)] pub use funcs::c95::string::{wcslen};
-#[cfg(windows)] pub use funcs::posix88::stat_::{wstat, wutime, wchmod, wrmdir};
-#[cfg(windows)] pub use funcs::bsd43::{closesocket};
-#[cfg(windows)] pub use funcs::extra::kernel32::{GetCurrentDirectoryW, GetLastError};
-#[cfg(windows)] pub use funcs::extra::kernel32::{GetEnvironmentVariableW, SetEnvironmentVariableW};
-#[cfg(windows)] pub use funcs::extra::kernel32::{GetModuleFileNameW, SetCurrentDirectoryW};
-#[cfg(windows)] pub use funcs::extra::kernel32::{GetSystemInfo, VirtualAlloc, VirtualFree};
-#[cfg(windows)] pub use funcs::extra::kernel32::{CreateFileMappingW, MapViewOfFile};
-#[cfg(windows)] pub use funcs::extra::kernel32::{UnmapViewOfFile, CloseHandle};
-#[cfg(windows)] pub use funcs::extra::kernel32::{WaitForSingleObject, GetSystemTimeAsFileTime};
-#[cfg(windows)] pub use funcs::extra::kernel32::{QueryPerformanceCounter};
-#[cfg(windows)] pub use funcs::extra::kernel32::{QueryPerformanceFrequency};
-#[cfg(windows)] pub use funcs::extra::kernel32::{GetExitCodeProcess, TerminateProcess};
-#[cfg(windows)] pub use funcs::extra::kernel32::{ReadFile, WriteFile, SetFilePointerEx};
-#[cfg(windows)] pub use funcs::extra::kernel32::{SetEndOfFile, CreateFileW};
-#[cfg(windows)] pub use funcs::extra::kernel32::{CreateDirectoryW, FindFirstFileW};
-#[cfg(windows)] pub use funcs::extra::kernel32::{FindNextFileW, FindClose, DeleteFileW};
-#[cfg(windows)] pub use funcs::extra::kernel32::{CreateHardLinkW, CreateEventW};
-#[cfg(windows)] pub use funcs::extra::kernel32::{FlushFileBuffers, CreateNamedPipeW};
-#[cfg(windows)] pub use funcs::extra::kernel32::{SetNamedPipeHandleState, WaitNamedPipeW};
-#[cfg(windows)] pub use funcs::extra::kernel32::{GetOverlappedResult, ConnectNamedPipe};
-#[cfg(windows)] pub use funcs::extra::kernel32::{DisconnectNamedPipe, OpenProcess};
-#[cfg(windows)] pub use funcs::extra::kernel32::{MoveFileExW, VirtualProtect};
-#[cfg(windows)] pub use funcs::extra::kernel32::{RemoveDirectoryW};
-#[cfg(windows)] pub use funcs::extra::msvcrt::{get_osfhandle, open_osfhandle};
-#[cfg(windows)] pub use funcs::extra::winsock::{ioctlsocket};
-
-#[cfg(any(target_os = "linux",
-          target_os = "android",
-          target_os = "freebsd",
-          target_os = "dragonfly",
-          target_os = "bitrig",
-          target_os = "openbsd",
-          target_os = "haiku"))]
-pub use consts::os::posix01::{CLOCK_REALTIME, CLOCK_MONOTONIC};
-
-#[cfg(any(target_os = "linux", target_os = "android"))]
-pub use funcs::posix01::unistd::{fdatasync};
-#[cfg(any(target_os = "linux", target_os = "android"))]
-pub use types::os::arch::extra::{sockaddr_ll};
-#[cfg(any(target_os = "linux", target_os = "android"))]
-pub use consts::os::extra::{AF_PACKET};
-
-#[cfg(all(unix, not(any(target_os = "freebsd", target_os = "bitrig", target_os = "openbsd", target_os = "haiku"))))]
-pub use consts::os::extra::{MAP_STACK};
-
-#[cfg(any(target_os = "freebsd", target_os = "dragonfly"))]
-pub use consts::os::bsd44::{TCP_KEEPIDLE};
-
-#[cfg(any(target_os = "macos", target_os = "ios"))]
-pub use consts::os::bsd44::{TCP_KEEPALIVE};
-#[cfg(any(target_os = "macos", target_os = "ios"))]
-pub use consts::os::extra::{F_FULLFSYNC};
-
-#[cfg(any(target_os = "macos", target_os = "ios"))]
-pub use types::os::arch::extra::{mach_timebase_info};
-
-
-#[cfg(all(not(windows), not(target_os = "haiku")))]
->>>>>>> Merge changes for Haiku with current post 0.12 rust
+#[cfg(not(any(windows, target_os = "haiku", all(target_os = "nacl", test))))]
 #[link(name = "c")]
 #[link(name = "m")]
 extern {}
 
-<<<<<<< HEAD
 // libnacl provides functions that require a trip through the IRT to work.
 // ie: _exit, mmap, nanosleep, etc. Anything that would otherwise require a trip
 // to the kernel.
@@ -305,17 +161,15 @@ extern {}
 #[cfg(all(target_os = "nacl", not(feature = "cargo-build"), not(test)))]
 #[link(name = "pnaclmm", kind = "static")]
 extern {}
-
-pub mod types {
-=======
+    
 #[cfg(target_os = "haiku")]
 #[link(name = "root")]
 #[link(name = "network")]
 
 extern {}
-    pub mod types {
->>>>>>> Merge changes for Haiku with current post 0.12 rust
 
+
+pub mod types {
     // Types tend to vary *per architecture* so we pull their definitions out
     // into this module.
 
@@ -2538,6 +2392,12 @@ extern {}
                 #[derive(Copy)] pub struct pthread_attr_t {
                     pub __size: [u32; 4]
                 }
+            }
+            pub mod posix08 {
+            }
+            pub mod bsd44 {
+            }
+            pub mod extra {
             }
         }
     }
@@ -5183,7 +5043,6 @@ pub mod consts {
             pub const F_SETFL : c_int = 0x0010;
 
             pub const SIGTRAP : c_int = 22;
-            pub const SIGPIPE: c_int = 7;
             pub const SIG_IGN: size_t = 1;
 
             pub const GLOB_APPEND   : c_int = 0x0001;
@@ -5623,11 +5482,8 @@ pub mod funcs {
               target_os = "dragonfly",
               target_os = "bitrig",
               target_os = "openbsd",
-<<<<<<< HEAD
-              target_os = "nacl"))]
-=======
+              target_os = "nacl",
               target_os = "haiku"))]
->>>>>>> Merge changes for Haiku with current post 0.12 rust
     pub mod posix88 {
         pub mod stat_ {
             use types::os::arch::c95::{c_char, c_int};
@@ -5645,11 +5501,8 @@ pub mod funcs {
                           target_os = "openbsd",
                           target_os = "android",
                           target_os = "ios",
-<<<<<<< HEAD
-                          target_os = "nacl"))]
-=======
+                          target_os = "nacl",
                           target_os = "haiku"))]
->>>>>>> Merge changes for Haiku with current post 0.12 rust
                 pub fn fstat(fildes: c_int, buf: *mut stat) -> c_int;
 
                 #[cfg(target_os = "macos")]
@@ -5667,11 +5520,8 @@ pub mod funcs {
                           target_os = "openbsd",
                           target_os = "android",
                           target_os = "ios",
-<<<<<<< HEAD
-                          target_os = "nacl"))]
-=======
+                          target_os = "nacl",
                           target_os = "haiku"))]
->>>>>>> Merge changes for Haiku with current post 0.12 rust
                 pub fn stat(path: *const c_char, buf: *mut stat) -> c_int;
 
                 #[cfg(target_os = "macos")]
@@ -5921,11 +5771,8 @@ pub mod funcs {
               target_os = "dragonfly",
               target_os = "bitrig",
               target_os = "openbsd",
-<<<<<<< HEAD
-              target_os = "nacl"))]
-=======
+              target_os = "nacl",
               target_os = "haiku"))]
->>>>>>> Merge changes for Haiku with current post 0.12 rust
     pub mod posix01 {
         pub mod stat_ {
             use types::os::arch::c95::{c_char, c_int};
@@ -5939,11 +5786,8 @@ pub mod funcs {
                           target_os = "openbsd",
                           target_os = "android",
                           target_os = "ios",
-<<<<<<< HEAD
-                          target_os = "nacl"))]
-=======
+                          target_os = "nacl",
                           target_os = "haiku"))]
->>>>>>> Merge changes for Haiku with current post 0.12 rust
                 pub fn lstat(path: *const c_char, buf: *mut stat) -> c_int;
 
                 #[cfg(target_os = "macos")]
@@ -6053,11 +5897,8 @@ pub mod funcs {
               target_os = "dragonfly",
               target_os = "bitrig",
               target_os = "openbsd",
-<<<<<<< HEAD
-              target_os = "nacl"))]
-=======
+              target_os = "nacl",
               target_os = "haiku"))]
->>>>>>> Merge changes for Haiku with current post 0.12 rust
     pub mod posix08 {
         pub mod unistd {
         }

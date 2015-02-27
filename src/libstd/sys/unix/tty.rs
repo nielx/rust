@@ -29,6 +29,9 @@ const TIOCGWINSZ: c_ulong = 0x40087468;
 #[cfg(any(target_os = "linux", target_os = "android"))]
 const TIOCGWINSZ: c_ulong = 0x00005413;
 
+#[cfg(target_os = "haiku")]
+const TIOCGWINSZ: c_ulong = 0x0000800C;
+
 impl TTY {
     pub fn new(fd: c_int) -> IoResult<TTY> {
         if unsafe { libc::isatty(fd) } != 0 {
@@ -57,7 +60,8 @@ impl TTY {
               target_os = "macos",
               target_os = "freebsd",
               target_os = "bitrig",
-              target_os = "openbsd"))]
+              target_os = "openbsd",
+              target_os = "haiku"))]
     pub fn get_winsize(&mut self) -> IoResult<(int, int)> {
         unsafe {
             #[repr(C)]

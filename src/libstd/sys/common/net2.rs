@@ -338,6 +338,7 @@ impl UdpSocket {
                    libc::IP_MULTICAST_LOOP, on as c_int)
     }
 
+    #[cfg(not(target_os = "haiku"))]
     pub fn join_multicast(&self, multi: &IpAddr) -> io::Result<()> {
         match *multi {
             IpAddr::V4(..) => {
@@ -348,6 +349,21 @@ impl UdpSocket {
             }
         }
     }
+    #[cfg(target_os = "haiku")]
+    pub fn join_multicast(&self, multi: &IpAddr) -> io::Result<()> {
+        use io::ErrorKind;
+        match *multi {
+            IpAddr::V4(..) => {
+                self.set_membership(multi, libc::IP_ADD_MEMBERSHIP)
+            }
+            IpAddr::V6(..) => {
+                // Do nothing
+                Err(Error::new(ErrorKind::Other, "Not implemented", None))
+            }
+        }
+    }
+    
+    #[cfg(not(target_os = "haiku"))]
     pub fn leave_multicast(&self, multi: &IpAddr) -> io::Result<()> {
         match *multi {
             IpAddr::V4(..) => {
@@ -358,6 +374,20 @@ impl UdpSocket {
             }
         }
     }
+    
+    #[cfg(target_os = "haiku")]
+    pub fn leave_multicast(&self, multi: &IpAddr) -> io::Result<()> {
+        match *multi {
+            IpAddr::V4(..) => {
+                self.set_membership(multi, libc::IP_DROP_MEMBERSHIP)
+            }
+            IpAddr::V6(..) => {
+                // Do nothing
+                Err(Error::new(ErrorKind::Other, "Not implemented", None))
+            }
+        }
+    }
+    
     fn set_membership(&self, addr: &IpAddr, opt: c_int) -> io::Result<()> {
         match *addr {
             IpAddr::V4(ref addr) => {

@@ -265,6 +265,12 @@ pub fn current_exe() -> io::Result<PathBuf> {
     }
 }
 
+#[cfg(target_os = "haiku")]
+pub fn current_exe() -> io::Result<PathBuf> {
+    use io::ErrorKind;
+    Err(io::Error::new(ErrorKind::Other, "Not implemented", None))
+}
+
 pub struct Args {
     iter: vec::IntoIter<OsString>,
     _dont_send_or_sync_me: *mut (),
