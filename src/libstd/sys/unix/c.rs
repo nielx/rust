@@ -61,8 +61,6 @@ pub const FIOCLEX: libc::c_ulong = 0x5451;
               target_arch = "mipsel",
               target_arch = "powerpc")))]
 pub const FIOCLEX: libc::c_ulong = 0x6601;
-#[cfg(target_os = "haiku")]
-pub const FIOCLEX: libc::c_ulong = 0; // TODO: does not exist on Haiku!
 
 #[cfg(any(target_os = "macos",
           target_os = "ios",
