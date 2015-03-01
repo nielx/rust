@@ -77,10 +77,18 @@ rust_readdir_r(DIR *dirp, struct dirent *entry, struct dirent **result) {
     return readdir_r(dirp, entry, result);
 }
 
+#if defined(__HAIKU__)
 int
 rust_dirent_t_size() {
-    return sizeof(struct dirent);
+    /* in Haiku dirent contains a 1 byte path placeholder */ 
+    return sizeof(struct dirent) + _POSIX_PATH_MAX;    
 }
+#else
+int
+rust_dirent_t_size() {
+    return sizeof(struct dirent);    
+}
+#endif
 
 #if defined(__BSD__)
 static int
