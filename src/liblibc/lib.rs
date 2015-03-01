@@ -5088,8 +5088,8 @@ pub mod consts {
 
             pub const PTHREAD_STACK_MIN: size_t = 8192;
 
-            pub const CLOCK_REALTIME: c_int = 0;
-            pub const CLOCK_MONOTONIC: c_int = 4;
+            pub const CLOCK_REALTIME: c_int = -1;
+            pub const CLOCK_MONOTONIC: c_int = 0;
         }
         pub mod posix08 {
         }
