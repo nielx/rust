@@ -5939,8 +5939,13 @@ pub mod consts {
             use types::os::arch::c95::{c_int, size_t};
             use types::os::common::posix01::rlim_t;
 
+            pub const F_DUPFD : c_int = 0x0001;
+            pub const F_GETFD : c_int = 0x0002;
+            pub const F_SETFD : c_int = 0x0004;
             pub const F_GETFL : c_int = 0x0008;
             pub const F_SETFL : c_int = 0x0010;
+            
+            pub const FD_CLOEXEC : c_int = 1;
 
             pub const SIGTRAP : c_int = 22;
             pub const SIG_IGN: size_t = 1;

@@ -11,7 +11,6 @@
 use io;
 use libc::{self, c_int, size_t, c_void};
 use mem;
-use sys::c;
 use sys::cvt;
 use sys_common::AsInner;
 
@@ -51,12 +50,24 @@ impl FileDesc {
         Ok(ret as usize)
     }
 
+    #[cfg(not(target_os = "haiku"))]
     pub fn set_cloexec(&self) {
         unsafe {
+			use sys::c;
             let ret = c::ioctl(self.fd, c::FIOCLEX);
             debug_assert_eq!(ret, 0);
         }
     }
+    #[cfg(target_os = "haiku")]
+    pub fn set_cloexec(&self) {
+        // FIOCLEX does not exist, use fcntl to accomplish the same goal
+        unsafe {
+        	use libc;
+        	let ret = libc::fcntl(self.fd, libc::F_SETFD, libc::FD_CLOEXEC);
+        	debug_assert_eq!(ret, 0);
+        }
+    }
+
 }
 
 impl AsInner<c_int> for FileDesc {
