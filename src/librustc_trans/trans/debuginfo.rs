@@ -737,11 +737,8 @@ pub fn finalize(cx: &CrateContext) {
         // for OS X to understand. For more info see #11352
         // This can be overridden using --llvm-opts -dwarf-version,N.
         // Android has the same issue (#22398)
-        // Also Haiku does not seem to understand this version, so
-        // also set that to version 2 
         if cx.sess().target.target.options.is_like_osx ||
-           cx.sess().target.target.options.is_like_android ||
-           cx.sess().target.target.target_os.as_slice() == "haiku" {
+           cx.sess().target.target.options.is_like_android {
             llvm::LLVMRustAddModuleFlag(cx.llmod(),
                                         "Dwarf Version\0".as_ptr() as *const _,
                                         2)
