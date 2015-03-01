@@ -148,8 +148,15 @@ impl Process {
             }
         }
 
+        #[cfg(not(target_os = "haiku"))]
         unsafe fn set_cloexec(fd: c_int) {
             let ret = c::ioctl(fd, c::FIOCLEX);
+            assert_eq!(ret, 0);
+        }
+        #[cfg(target_os = "haiku")]
+        unsafe fn set_cloexec(fd: c_int) {
+            // FIOCLEX does not exist, use fcntl to accomplish the same goal
+            let ret = libc::fcntl(fd, libc::F_SETFD, libc::FD_CLOEXEC);
             assert_eq!(ret, 0);
         }
 
