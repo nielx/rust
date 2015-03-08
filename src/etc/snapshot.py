@@ -48,6 +48,7 @@ snapshot_files = {
         "dragonfly": ["bin/rustc"],
         "bitrig": ["bin/rustc"],
         "openbsd": ["bin/rustc"],
+        "haiku": ["bin/rustc"],
         }
 
 winnt_runtime_deps_32 = ["libgcc_s_dw2-1.dll", "libstdc++-6.dll"]
@@ -105,6 +106,8 @@ def get_kernel(triple):
         return "bitrig"
     if os_name == "openbsd":
         return "openbsd"
+    if os_name == "haiku":
+        return "haiku"
     return "linux"
 
 
