@@ -463,6 +463,19 @@ const char * rust_current_exe() {
     return (self);
 }
 
+#elif defined(__HAIKU__)
+
+#include <kernel/image.h>
+
+const char * rust_current_exe() {
+    image_info info;
+    int32 cookie = 0;
+    if (get_next_image_info(0, &cookie, &info) != B_OK)
+        return (NULL);
+
+    return strdup(info.name);
+}
+
 #endif
 
 #endif // !defined(_WIN32)
