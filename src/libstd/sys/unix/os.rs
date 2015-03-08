@@ -228,7 +228,7 @@ pub fn current_exe() -> io::Result<PathBuf> {
     ::fs::read_link("/proc/curproc/exe")
 }
 
-#[cfg(any(target_os = "bitrig", target_os = "openbsd"))]
+#[cfg(any(target_os = "bitrig", target_os = "openbsd", target_os = "haiku"))]
 pub fn current_exe() -> io::Result<PathBuf> {
     use sync::StaticMutex;
     static LOCK: StaticMutex = StaticMutex::new();
@@ -268,12 +268,6 @@ pub fn current_exe() -> io::Result<PathBuf> {
         v.set_len(sz as usize - 1); // chop off trailing NUL
         Ok(PathBuf::from(OsString::from_vec(v)))
     }
-}
-
-#[cfg(target_os = "haiku")]
-pub fn current_exe() -> io::Result<PathBuf> {
-    use io::ErrorKind;
-    Err(io::Error::new(ErrorKind::Other, "Not implemented", None))
 }
 
 pub struct Args {
