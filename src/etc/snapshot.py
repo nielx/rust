@@ -50,6 +50,7 @@ snapshot_files = {
         "openbsd": ["bin/rustc"],
         "solaris": ["bin/rustc"],
         "winnt": ["bin/rustc.exe"],
+        "haiku": ["bin/rustc"],
         }
 
 winnt_runtime_deps_32 = ["libgcc_s_dw2-1.dll", "libstdc++-6.dll"]
@@ -109,6 +110,8 @@ def get_kernel(triple):
         return "netbsd"
     if os_name == "openbsd":
         return "openbsd"
+    if os_name == "haiku":
+        return "haiku"
     return "linux"
 
 
