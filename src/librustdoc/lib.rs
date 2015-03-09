@@ -129,7 +129,8 @@ struct Output {
 }
 
 pub fn main() {
-    const STACK_SIZE: usize = 32000000; // 32MB
+	const STACK_SIZE: usize = 16000000; // 16MB is the max on Haiku
+	
     let res = std::thread::Builder::new().stack_size(STACK_SIZE).scoped(move || {
         let s = env::args().collect::<Vec<_>>();
         main_args(&s)
