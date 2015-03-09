@@ -4,7 +4,7 @@
 	branch = master
 [submodule "src/compiler-rt"]
 	path = src/compiler-rt
-	url = https://github.com/rust-lang/compiler-rt.git
+	url = https://github.com/nielx/compiler-rt.git
 [submodule "src/rt/hoedown"]
 	path = src/rt/hoedown
 	url = https://github.com/rust-lang/hoedown.git
