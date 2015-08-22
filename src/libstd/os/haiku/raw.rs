@@ -12,12 +12,13 @@
 
 #![stable(feature = "raw_ext", since = "1.1.0")]
 
+use os::raw::c_long;
 use os::unix::raw::{uid_t, gid_t};
 
 #[stable(feature = "raw_ext", since = "1.1.0")] pub type blkcnt_t = i64;
 #[stable(feature = "raw_ext", since = "1.1.0")] pub type blksize_t = i32;
 #[stable(feature = "raw_ext", since = "1.1.0")] pub type dev_t = i32;
-#[stable(feature = "raw_ext", since = "1.1.0")] pub type ino_t = u64;
+#[stable(feature = "raw_ext", since = "1.1.0")] pub type ino_t = i64;
 #[stable(feature = "raw_ext", since = "1.1.0")] pub type mode_t = u32;
 #[stable(feature = "raw_ext", since = "1.1.0")] pub type nlink_t = i32;
 #[stable(feature = "raw_ext", since = "1.1.0")] pub type off_t = i64;
@@ -47,19 +48,19 @@ pub struct stat {
     #[stable(feature = "raw_ext", since = "1.1.0")]
     pub st_atime: time_t,
     #[stable(feature = "raw_ext", since = "1.1.0")]
-    pub st_atime_nsec: i32,
+    pub st_atime_nsec: c_long,
     #[stable(feature = "raw_ext", since = "1.1.0")]
     pub st_mtime: time_t,
     #[stable(feature = "raw_ext", since = "1.1.0")]
-    pub st_mtime_nsec: i32,
+    pub st_mtime_nsec: c_long,
     #[stable(feature = "raw_ext", since = "1.1.0")]
     pub st_ctime: time_t,
     #[stable(feature = "raw_ext", since = "1.1.0")]
-    pub st_ctime_nsec: i32,
+    pub st_ctime_nsec: c_long,
     #[stable(feature = "raw_ext", since = "1.1.0")]
     pub st_crtime: time_t,
     #[stable(feature = "raw_ext", since = "1.1.0")]
-    pub st_crtime_nsec: i32,
+    pub st_crtime_nsec: c_long,
     #[stable(feature = "raw_ext", since = "1.1.0")]
     pub st_type: u32,
     #[stable(feature = "raw_ext", since = "1.1.0")]

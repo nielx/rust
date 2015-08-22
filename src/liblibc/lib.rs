@@ -175,7 +175,7 @@ extern {}
 #[cfg(all(target_os = "nacl", not(feature = "cargo-build"), not(test)))]
 #[link(name = "pnaclmm", kind = "static")]
 extern {}
-    
+
 #[cfg(target_os = "haiku")]
 #[link(name = "root")]
 #[link(name = "network")]
@@ -2426,7 +2426,7 @@ pub mod types {
             }
         }
     }
-    
+
     #[cfg(target_os = "haiku")]
     pub mod os {
         pub mod common {
@@ -2434,9 +2434,10 @@ pub mod types {
                 use types::common::c95::{c_void};
                 use types::os::arch::c95::{c_char, c_int, size_t,
                                                  time_t, suseconds_t, c_long};
+                use types::os::arch::c99::{uintptr_t};
 
-                pub type pthread_t = u32;
-                pub type rlim_t = u32;
+                pub type pthread_t = uintptr_t;
+                pub type rlim_t = uintptr_t;
 
                 #[repr(C)]
                 #[derive(Copy, Clone)] pub struct glob_t {
@@ -2468,21 +2469,21 @@ pub mod types {
                 }
 
                 pub enum timezone {}
-                
-                // TODO: find whether this definition is correct
+
+                // FIXME: find whether this definition is correct
                 pub type sighandler_t = size_t;
-                
+
                 #[repr(C)]
                 #[derive(Copy, Clone)]
                 pub struct rlimit {
-                	pub rlim_cur: rlim_t,
-                	pub rlim_max: rlim_t,
+                    pub rlim_cur: rlim_t,
+                    pub rlim_max: rlim_t,
                 }
             }
-            
+
             pub mod bsd43 {
                 use types::os::common::posix01::timeval;
-                
+
                 #[repr(C)]
                 #[derive(Copy, Clone)]
                 pub struct rusage {
@@ -2490,9 +2491,9 @@ pub mod types {
                     pub ru_stime: timeval,
                 }
             }
-	
+
             pub mod bsd44 {
-            	use core::clone::Clone;
+                use core::clone::Clone;
                 use types::os::arch::c95::{c_char, c_int, c_uint};
 
                 pub type socklen_t = u32;
@@ -2514,7 +2515,7 @@ pub mod types {
                     pub __ss_pad2: [u8; 112],
                 }
                 impl Clone for sockaddr_storage {
-                	fn clone(&self) -> sockaddr_storage { *self }
+                    fn clone(&self) -> sockaddr_storage { *self }
                 }
                 #[repr(C)]
                 #[derive(Copy, Clone)] pub struct sockaddr_in {
@@ -2569,11 +2570,102 @@ pub mod types {
                     pub sun_path: [c_char; 126]
                 }
                 impl Clone for sockaddr_un {
-                	fn clone(&self) -> sockaddr_un { *self }
+                    fn clone(&self) -> sockaddr_un { *self }
                 }
             }
         }
-        
+
+        #[cfg(target_arch = "x86_64")]
+        pub mod arch {
+            pub mod c95 {
+                pub type c_char = i8;
+                pub type c_schar = i8;
+                pub type c_uchar = u8;
+                pub type c_short = i16;
+                pub type c_ushort = u16;
+                pub type c_int = i32;
+                pub type c_uint = u32;
+                pub type c_long = i64;
+                pub type c_ulong = u64;
+                pub type c_float = f32;
+                pub type c_double = f64;
+                pub type size_t = u64;
+                pub type ptrdiff_t = i64;
+                pub type clock_t = i32;
+                pub type time_t = i32;
+                pub type suseconds_t = i32;
+                pub type wchar_t = i32;
+            }
+            pub mod c99 {
+                pub type c_longlong = i64;
+                pub type c_ulonglong = u64;
+                pub type intptr_t = i64;
+                pub type uintptr_t = u64;
+                pub type intmax_t = i64;
+                pub type uintmax_t = u64;
+            }
+            pub mod posix88 {
+                pub type off_t = i64;
+                pub type dev_t = i32;
+                pub type ino_t = i64;
+                pub type pid_t = i32;
+                pub type uid_t = u32;
+                pub type gid_t = u32;
+                pub type useconds_t = u32;
+                pub type mode_t = u32;
+                pub type ssize_t = i64;
+            }
+            pub mod posix01 {
+                use types::common::c95::{c_void};
+                use types::os::arch::c95::{time_t, c_long};
+                use types::os::arch::posix88::{dev_t, gid_t, ino_t};
+                use types::os::arch::posix88::{mode_t, off_t};
+                use types::os::arch::posix88::{uid_t};
+
+                pub type nlink_t = i32;
+                pub type blksize_t = i32;
+                pub type blkcnt_t = i64;
+
+                #[repr(C)]
+                #[derive(Copy, Clone)] pub struct stat {
+                    pub st_dev: dev_t,
+                    pub st_ino: ino_t,
+                    pub st_mode: mode_t,
+                    pub st_nlink: nlink_t,
+                    pub st_uid: uid_t,
+                    pub st_gid: gid_t,
+                    pub st_size: off_t,
+                    pub st_rdev: dev_t,
+                    pub st_blksize: blksize_t,
+                    pub st_atime: time_t,
+                    pub st_atime_nsec: c_long,
+                    pub st_mtime: time_t,
+                    pub st_mtime_nsec: c_long,
+                    pub st_ctime: time_t,
+                    pub st_ctime_nsec: c_long,
+                    pub st_crtime: time_t,
+                    pub st_crtime_nsec: c_long,
+                    pub st_type: u32,
+                    pub st_blocks: blkcnt_t,
+                }
+
+                #[repr(C)]
+                #[derive(Copy, Clone)] pub struct utimbuf {
+                    pub actime: time_t,
+                    pub modtime: time_t,
+                }
+
+                pub type pthread_attr_t = *mut c_void;
+            }
+            pub mod posix08 {
+            }
+            pub mod bsd44 {
+            }
+            pub mod extra {
+            }
+        }
+
+        #[cfg(target_arch = "x86")]
         pub mod arch {
             pub mod c95 {
                 pub type c_char = i8;
@@ -2614,7 +2706,8 @@ pub mod types {
                 pub type ssize_t = i32;
             }
             pub mod posix01 {
-                use types::os::arch::c95::{time_t};
+                use types::common::c95::{c_void};
+                use types::os::arch::c95::{time_t, c_long};
                 use types::os::arch::posix88::{dev_t, gid_t, ino_t};
                 use types::os::arch::posix88::{mode_t, off_t};
                 use types::os::arch::posix88::{uid_t};
@@ -2635,27 +2728,24 @@ pub mod types {
                     pub st_rdev: dev_t,
                     pub st_blksize: blksize_t,
                     pub st_atime: time_t,
-                    pub st_atime_nsec: i32,
+                    pub st_atime_nsec: c_long,
                     pub st_mtime: time_t,
-                    pub st_mtime_nsec: i32,
+                    pub st_mtime_nsec: c_long,
                     pub st_ctime: time_t,
-                    pub st_ctime_nsec: i32,
+                    pub st_ctime_nsec: c_long,
                     pub st_crtime: time_t,
-                    pub st_crtime_nsec: i32,
+                    pub st_crtime_nsec: c_long,
                     pub st_type: u32,
                     pub st_blocks: blkcnt_t,
                 }
-                
+
                 #[repr(C)]
                 #[derive(Copy, Clone)] pub struct utimbuf {
                     pub actime: time_t,
                     pub modtime: time_t,
                 }
 
-                #[repr(C)]
-                #[derive(Copy, Clone)] pub struct pthread_attr_t {
-                    pub __size: [u32; 4]
-                }
+                pub type pthread_attr_t = *mut c_void;
             }
             pub mod posix08 {
             }
@@ -5468,7 +5558,7 @@ pub mod consts {
             pub const _SC_PASS_MAX : c_int = 131;
         }
     }
-    
+
     #[cfg(target_os = "haiku")]
     pub mod os {
         pub mod c95 {
@@ -5546,7 +5636,8 @@ pub mod consts {
             pub const PROT_WRITE : c_int = 2;
             pub const PROT_EXEC : c_int = 4;
 
-            pub const MAP_FILE : c_int = 0x00; // Warning: Haiku does not have a MAP_FILE, but libstd/os.rs requires it
+            // Warning: Haiku does not have a MAP_FILE, but libstd/os.rs requires it
+            pub const MAP_FILE : c_int = 0x00;
             pub const MAP_SHARED : c_int = 0x01;
             pub const MAP_PRIVATE : c_int = 0x02;
             pub const MAP_FIXED : c_int = 0x04;
@@ -5672,7 +5763,7 @@ pub mod consts {
             pub const F_SETFD : c_int = 0x0004;
             pub const F_GETFL : c_int = 0x0008;
             pub const F_SETFL : c_int = 0x0010;
-            
+
             pub const FD_CLOEXEC : c_int = 1;
 
             pub const SIGTRAP : c_int = 22;
@@ -5723,7 +5814,7 @@ pub mod consts {
 
             pub const CLOCK_REALTIME: c_int = -1;
             pub const CLOCK_MONOTONIC: c_int = 0;
-            
+
             pub const RLIMIT_CORE: c_int = 0;
             pub const RLIMIT_CPU: c_int = 1;
             pub const RLIMIT_DATA: c_int = 2;
@@ -5733,12 +5824,12 @@ pub mod consts {
             pub const RLIMIT_AS: c_int = 6;
             // Haiku specific
             pub const RLIMIT_NOVMON: c_int = 7;
-            
+
             pub const RLIMIT_NLIMITS: c_int = 8;
             pub const RLIM_INFINITY: rlim_t = 0xffffffff;
             pub const RLIM_SAVED_MAX: rlim_t = RLIM_INFINITY;
             pub const RLIM_SAVED_CUR: rlim_t = RLIM_INFINITY;
-            
+
             pub const RUSAGE_SELF: c_int = 0;
             pub const RUSAGE_CHILDREN: c_int = -1;
         }
@@ -5746,7 +5837,7 @@ pub mod consts {
         }
         pub mod bsd44 {
             use types::os::arch::c95::c_int;
-            
+
             // In Haiku these are prefixed with POSIX_
             pub const MADV_NORMAL : c_int = 1;
             pub const MADV_RANDOM : c_int = 3;
@@ -6762,7 +6853,7 @@ pub mod funcs {
     #[cfg(target_os = "windows")]
     pub mod bsd44 {
     }
-    
+
     #[cfg(target_os = "haiku")]
     pub mod bsd44 {
         use types::os::arch::c95::{c_int, c_ulong};
