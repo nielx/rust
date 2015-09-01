@@ -115,11 +115,11 @@ mod imp {
         use libc;
 
         pub struct flock {
+            pub l_type: libc::c_short,
+            pub l_whence: libc::c_short,
             pub l_start: libc::off_t,
             pub l_len: libc::off_t,
             pub l_pid: libc::pid_t,
-            pub l_type: libc::c_short,
-            pub l_whence: libc::c_short,
 
             // not actually here, but brings in line with freebsd
             pub l_sysid: libc::c_int,

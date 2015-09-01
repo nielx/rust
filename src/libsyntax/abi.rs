@@ -140,7 +140,7 @@ impl fmt::Display for Os {
             OsDragonfly => "dragonfly".fmt(f),
             OsBitrig => "bitrig".fmt(f),
             OsOpenbsd => "openbsd".fmt(f),
-			OsHaiku => "haiku".fmt(f),
+            OsHaiku => "haiku".fmt(f),
         }
     }
 }
