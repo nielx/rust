@@ -6601,6 +6601,8 @@ pub mod consts {
             pub const F_GETFL : c_int = 0x0008;
             pub const F_SETFL : c_int = 0x0010;
             
+            pub const F_DUPFD_CLOEXEC : c_int = 0xdead; // Fake value
+            
             pub const FD_CLOEXEC : c_int = 1;
 
             pub const SIGTRAP : c_int = 22;
@@ -6671,6 +6673,9 @@ pub mod consts {
             pub const RUSAGE_CHILDREN: c_int = -1;
         }
         pub mod posix08 {
+        	use types::os::arch::c95::c_int;
+        	pub const O_CLOEXEC: c_int = 0x00000040;
+
         }
         pub mod bsd44 {
             use types::os::arch::c95::c_int;
