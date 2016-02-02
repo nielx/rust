@@ -16,4 +16,4 @@
 	url = https://github.com/nielx/rust-installer
 [submodule "src/liblibc"]
 	path = src/liblibc
-	url = https://github.com/rust-lang/libc
+	url = https://github.com/nielx/libc
