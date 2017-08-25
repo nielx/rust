@@ -19,7 +19,6 @@ pub fn opts() -> TargetOptions {
         has_rpath: false,
         target_family: Some("unix".to_string()),
         linker_is_gnu: true,
-        no_integrated_as: true,
         .. Default::default()
     }
 }
