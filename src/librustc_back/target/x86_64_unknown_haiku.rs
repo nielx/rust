@@ -26,7 +26,7 @@ pub fn target() -> Target {
             linker: "cc".to_string(),
             dynamic_linking: true,
             executables: true,
-            has_rpath: true,
+            has_rpath: false,
             max_atomic_width: 64,
             .. Default::default()
         },
