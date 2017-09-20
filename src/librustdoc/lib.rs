@@ -99,7 +99,7 @@ struct Output {
 }
 
 pub fn main() {
-    const STACK_SIZE: usize = 32_000_000; // 32MB
+    const STACK_SIZE: usize = 16_000_000; // 16MB on Haiku
     env_logger::init().unwrap();
     let res = std::thread::Builder::new().stack_size(STACK_SIZE).spawn(move || {
         get_args().map(|args| main_args(&args)).unwrap_or(1)
