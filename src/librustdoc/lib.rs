@@ -99,7 +99,7 @@ struct Output {
 }
 
 pub fn main() {
-    const STACK_SIZE: usize = 32_000_000; // 32MB
+    const STACK_SIZE: usize = 16_000_000; // 16MB on Haiku
     let res = std::thread::Builder::new().stack_size(STACK_SIZE).spawn(move || {
         let s = env::args().collect::<Vec<_>>();
         main_args(&s)
