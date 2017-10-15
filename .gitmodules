@@ -23,7 +23,7 @@
 	url = https://github.com/rust-lang-nursery/nomicon.git
 [submodule "src/tools/cargo"]
 	path = cargo
-	url = https://github.com/rust-lang/cargo.git
+	url = https://github.com/nielx/cargo
 [submodule "reference"]
 	path = src/doc/reference
 	url = https://github.com/rust-lang-nursery/reference.git
