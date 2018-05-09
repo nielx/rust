@@ -170,7 +170,7 @@ mod toolstate;
 #[cfg(windows)]
 mod job;
 
-#[cfg(unix)]
+#[cfg(all(unix, not(target_os = "haiku")))]
 mod job {
     use libc;
 
@@ -181,7 +181,7 @@ mod job {
     }
 }
 
-#[cfg(not(any(unix, windows)))]
+#[cfg(any(target_os = "haiku", not(any(unix, windows))))]
 mod job {
     pub unsafe fn setup(_build: &mut ::Build) {
     }
