@@ -33,3 +33,7 @@ debug-assertions = false
 [profile.test]
 debug = false
 debug-assertions = false
+
+[replace]
+"backtrace:0.3.2" = { git = "https://github.com/nielx/backtrace-rs", branch = "haiku-0.3.2" }
+
