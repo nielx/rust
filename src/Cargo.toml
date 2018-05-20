@@ -39,6 +39,9 @@ members = [
   "tools/rls/test_data/omit_init_build",
 ]
 
+[replace]
+"backtrace:0.3.2" = { git = "https://github.com/nielx/backtrace-rs", branch = "haiku-0.3.2" }
+
 # Curiously, compiletest will segfault if compiled with opt-level=3 on 64-bit
 # MSVC when running the compile-fail test suite when a should-fail test panics.
 # But hey if this is removed and it gets past the bots, sounds good to me.
