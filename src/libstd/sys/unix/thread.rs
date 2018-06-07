@@ -164,8 +164,7 @@ impl Thread {
         unsafe {
             let ret = libc::pthread_join(self.id, ptr::null_mut());
             mem::forget(self);
-            assert!(ret == 0,
-                    "failed to join thread: {}", io::Error::from_raw_os_error(ret));
+            debug_assert_eq!(ret, 0);
         }
     }
 
