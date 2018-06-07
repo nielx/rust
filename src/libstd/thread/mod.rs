@@ -1438,11 +1438,6 @@ impl<T> JoinHandle<T> {
     /// [`panic`]: ../../std/macro.panic.html
     /// [atomic memory orderings]: ../../std/sync/atomic/index.html
     ///
-    /// # Panics
-    ///
-    /// This function may panic on some platforms if a thread attempts to join
-    /// itself or otherwise may create a deadlock with joining threads.
-    ///
     /// # Examples
     ///
     /// ```
