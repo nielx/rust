@@ -268,7 +268,6 @@ pub const FILE_END: DWORD = 2;
 
 pub const WAIT_OBJECT_0: DWORD = 0x00000000;
 pub const WAIT_TIMEOUT: DWORD = 258;
-pub const WAIT_FAILED: DWORD = 0xFFFFFFFF;
 
 #[cfg(target_env = "msvc")]
 #[cfg(feature = "backtrace")]
