@@ -1351,11 +1351,6 @@ impl<T> JoinHandle<T> {
     /// [`Err`]: crate::result::Result::Err
     /// [atomic memory orderings]: crate::sync::atomic
     ///
-    /// # Panics
-    ///
-    /// This function may panic on some platforms if a thread attempts to join
-    /// itself or otherwise may create a deadlock with joining threads.
-    ///
     /// # Examples
     ///
     /// ```
