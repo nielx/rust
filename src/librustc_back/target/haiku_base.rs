@@ -17,6 +17,7 @@ pub fn opts() -> TargetOptions {
         dynamic_linking: true,
         executables: true,
         has_rpath: false,
+        position_independent_executables: true,
         target_family: Some("unix".to_string()),
         relro_level: RelroLevel::Full,
         linker_is_gnu: true,
