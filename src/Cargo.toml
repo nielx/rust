@@ -60,3 +60,4 @@ cargo = { path = "tools/cargo" }
 
 [patch.crates-io]
 rustfmt-nightly = { path = "tools/rustfmt" }
+backtrace = { git = "https://github.com/nielx/backtrace-rs", branch = "haiku-0.3.4" }
