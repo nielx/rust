@@ -72,3 +72,4 @@ cargo = { path = "tools/cargo" }
 # RLS depends on `rustfmt` from crates.io, so we put this in a `[patch]` section
 # for crates.io
 rustfmt-nightly = { path = "tools/rustfmt" }
+backtrace = { git = "https://github.com/nielx/backtrace-rs", branch = "haiku-0.3.5" }
