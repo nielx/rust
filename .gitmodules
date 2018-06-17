@@ -1,7 +1,7 @@
 [submodule "src/llvm"]
 	path = src/llvm
-	url = https://github.com/rust-lang/llvm.git
-	branch = master
+	url = https://github.com/nielx/llvm.git
+	branch = rust-haiku-1.25.0
 [submodule "src/rt/hoedown"]
 	path = src/rt/hoedown
 	url = https://github.com/rust-lang/hoedown.git
