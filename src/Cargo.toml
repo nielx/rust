@@ -65,3 +65,4 @@ cargo = { path = "tools/cargo" }
 # for crates.io
 rustfmt-nightly = { path = "tools/rustfmt" }
 clippy_lints = { path = "tools/clippy/clippy_lints" }
+backtrace = { git = "https://github.com/nielx/backtrace-rs", branch = "haiku-0.3.6" }
