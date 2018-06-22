@@ -66,3 +66,4 @@ cargo = { path = "tools/cargo" }
 rustfmt-nightly = { path = "tools/rustfmt" }
 clippy_lints = { path = "tools/clippy/clippy_lints" }
 backtrace = { git = "https://github.com/nielx/backtrace-rs", branch = "haiku-0.3.6" }
+socket2 = { git = "https://github.com/nielx/socket2-rs", branch = "haiku-0.3.5" }
