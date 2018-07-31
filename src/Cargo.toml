@@ -72,3 +72,4 @@ rustfmt-nightly = { path = "tools/rustfmt" }
 
 [patch.crates-io]
 backtrace = { git = "https://github.com/alexcrichton/backtrace-rs", rev = "01219b0" }
+libc = { git = "https://github.com/rust-lang/libc", rev="572f142" }
