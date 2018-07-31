@@ -69,3 +69,6 @@ cargo = { path = "tools/cargo" }
 # that we're shipping as well (to ensure that the rustfmt in RLS and the
 # `rustfmt` executable are the same exact vesion).
 rustfmt-nightly = { path = "tools/rustfmt" }
+
+[patch.crates-io]
+backtrace = { git = "https://github.com/alexcrichton/backtrace-rs", rev = "01219b0" }
