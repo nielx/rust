@@ -59,6 +59,7 @@ cargo = { path = "src/tools/cargo" }
 # that we're shipping as well (to ensure that the rustfmt in RLS and the
 # `rustfmt` executable are the same exact version).
 rustfmt-nightly = { path = "src/tools/rustfmt" }
+libssh2-sys = { git = "https://github.com/alexcrichton/ssh2-rs", rev = "74d7f04" }
 
 # See comments in `src/tools/rustc-workspace-hack/README.md` for what's going on
 # here
