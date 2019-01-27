@@ -1461,9 +1461,14 @@ fn parse_crate_attrs<'a>(sess: &'a Session, input: &Input) -> PResult<'a, Vec<as
 }
 
 // Temporarily have stack size set to 32MB to deal with various crates with long method
-// chains or deep syntax trees.
+// chains or deep syntax trees, except when on Haiku
 // FIXME(oli-obk): get https://github.com/rust-lang/rust/pull/55617 the finish line
-const STACK_SIZE: usize = 32 * 1024 * 1024; // 32MB
+
+#[cfg(not(target_os = "haiku"))]
+const STACK_SIZE: usize = 32 * 1024 * 1024;
+
+#[cfg(target_os = "haiku")]
+const STACK_SIZE: usize = 16 * 1024 * 1024;
 
 /// Runs `f` in a suitable thread for running `rustc`; returns a `Result` with either the return
 /// value of `f` or -- if a panic occurs -- the panic value.
