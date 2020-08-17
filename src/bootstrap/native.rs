@@ -178,7 +178,10 @@ impl Step for Llvm {
             .define("LLVM_TARGET_ARCH", target_native.split('-').next().unwrap())
             .define("LLVM_DEFAULT_TARGET_TRIPLE", target_native);
 
-        if !target.contains("netbsd") && target != "aarch64-apple-darwin" {
+        if !target.contains("netbsd")
+            && target != "aarch64-apple-darwin"
+            && !target.contains("haiku")
+        {
             cfg.define("LLVM_ENABLE_ZLIB", "ON");
         } else {
             // FIXME: Enable zlib on NetBSD too
