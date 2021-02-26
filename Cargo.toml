@@ -108,6 +108,7 @@ rustc-std-workspace-std = { path = 'library/rustc-std-workspace-std' }
 
 # Build fix for cross-compiling Rust for Haiku
 libz-sys = { git = 'https://github.com/nielx/libz-sys', tag = "1.1.2-haiku" }
+curl-sys = { git = 'https://github.com/alexcrichton/curl-rust', rev = "15a48d2346cb1d28d76bcbdde42bfb2c6e62c621" }
 
 [patch."https://github.com/rust-lang/rust-clippy"]
 clippy_lints = { path = "src/tools/clippy/clippy_lints" }
